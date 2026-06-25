@@ -512,29 +512,25 @@ GETS is **MATATAG-native** (the precondition for any DepEd alignment) and **offl
       <img src="public/img/team/Ellah.jpeg" width="150" alt="Ellah Benerado"/><br/>
       <strong>Ellah Benerado</strong><br/>
       <sub>[role — FILL IN]</sub><br/><br/>
-      <!-- TODO: replace # with Ellah's LinkedIn URL -->
-      <a href="#"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
+      <a href="https://www.linkedin.com/in/ellahvate"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
     </td>
     <td align="center" width="25%">
       <img src="public/img/team/Eliesha.jpg" width="150" alt="Eliesha Mae Francisco"/><br/>
       <strong>Eliesha Mae Francisco</strong><br/>
       <sub>[role — FILL IN]</sub><br/><br/>
-      <!-- TODO: replace # with Eliesha's LinkedIn URL -->
-      <a href="#"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
+      <a href="https://www.linkedin.com/in/elifrncsc"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
     </td>
     <td align="center" width="25%">
       <img src="public/img/team/Lance.png" width="150" alt="Lance Evangelista"/><br/>
       <strong>Lance Evangelista</strong><br/>
       <sub>[role — FILL IN]</sub><br/><br/>
-      <!-- TODO: replace # with Lance's LinkedIn URL -->
-      <a href="#"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
+      <a href="https://www.linkedin.com/in/lance-miguel-evangelista-58691a315"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
     </td>
     <td align="center" width="25%">
       <img src="public/img/team/Osyris.jpg" width="150" alt="Osyris Fajardo"/><br/>
       <strong>Osyris Fajardo</strong><br/>
       <sub>[role — FILL IN]</sub><br/><br/>
-      <!-- TODO: replace # with Osyris's LinkedIn URL -->
-      <a href="#"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
+      <a href="https://www.linkedin.com/in/osyris-benedict-fajardo-237b1738b"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
     </td>
   </tr>
 </table>
@@ -545,13 +541,19 @@ GETS is **MATATAG-native** (the precondition for any DepEd alignment) and **offl
 
 ## Acknowledgements
 
-> *List only what the prototype actually ships — an acknowledgement implies use. Some of these carry attribution requirements (see notes), so keep this section accurate.*
+> *Lists what the prototype actually ships — an acknowledgement implies use. Some carry attribution requirements (see notes), so this section is kept accurate.*
 
-- **Live generation** powered by **Google Gemini Flash** via the Google AI Studio / Gemini API.
+**Currently used in the MVP:**
+
+- **Live generation** powered by **Google Gemini Flash** (`gemini-2.5-flash`) via the Google AI Studio / Gemini API.
 - **Curriculum alignment and lesson grounding** based on the DepEd **MATATAG Curriculum Guides** (Grade 7, SY 2024–2025), Department of Education, Philippines — used under DepEd's open-access terms (Executive Order No. 2, s. 2016; share-and-adapt with attribution).
-- **OpenDyslexic** typeface by Abbie Gonzalez ([opendyslexic.org](https://opendyslexic.org)), used under the **SIL Open Font License 1.1**, for the dyslexia accessibility mode. *(Attribution required by licence.)*
-- **Read-aloud** powered by the browser's built-in **Web Speech API**.
-- `[FILL IN — any other libraries or tools you actually use]`
+- **Read-aloud** powered by the browser's built-in **Web Speech API** (`speechSynthesis`).
+- Built with **React**, **Vite**, **Express**, and **Node.js**.
+- Provider layer is pluggable: **Groq** (Llama 3.3 70B) and the **Anthropic SDK** (Claude) are supported as alternate LLM backends via one env var.
+
+**Planned (acknowledged when the feature ships):**
+
+- **OpenDyslexic** typeface by Abbie Gonzalez ([opendyslexic.org](https://opendyslexic.org)), under the **SIL Open Font License 1.1**, for the dyslexia accessibility mode on the roadmap. *(Attribution will be required once bundled.)*
 
 ---
 
