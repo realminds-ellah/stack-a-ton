@@ -502,13 +502,44 @@ GETS is **MATATAG-native** (the precondition for any DepEd alignment) and **offl
 
 ## Team
 
+<div align="center">
+
 **Stack-a-ton**
 
-> `[FILL IN — add each member with role and LinkedIn.]`
+<table>
+  <tr>
+    <td align="center" width="25%">
+      <img src="public/img/team/Ellah.jpeg" width="150" alt="Ellah Benerado"/><br/>
+      <strong>Ellah Benerado</strong><br/>
+      <sub>[role — FILL IN]</sub><br/><br/>
+      <!-- TODO: replace # with Ellah's LinkedIn URL -->
+      <a href="#"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
+    </td>
+    <td align="center" width="25%">
+      <img src="public/img/team/Eliesha.jpg" width="150" alt="Eliesha Mae Francisco"/><br/>
+      <strong>Eliesha Mae Francisco</strong><br/>
+      <sub>[role — FILL IN]</sub><br/><br/>
+      <!-- TODO: replace # with Eliesha's LinkedIn URL -->
+      <a href="#"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
+    </td>
+    <td align="center" width="25%">
+      <img src="public/img/team/Lance.png" width="150" alt="Lance Evangelista"/><br/>
+      <strong>Lance Evangelista</strong><br/>
+      <sub>[role — FILL IN]</sub><br/><br/>
+      <!-- TODO: replace # with Lance's LinkedIn URL -->
+      <a href="#"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
+    </td>
+    <td align="center" width="25%">
+      <img src="public/img/team/Osyris.jpg" width="150" alt="Osyris Fajardo"/><br/>
+      <strong>Osyris Fajardo</strong><br/>
+      <sub>[role — FILL IN]</sub><br/><br/>
+      <!-- TODO: replace # with Osyris's LinkedIn URL -->
+      <a href="#"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
+    </td>
+  </tr>
+</table>
 
-| Member | Role | LinkedIn |
-| --- | --- | --- |
-| `[Name]` | `[Role]` | `[link]` |
+</div>
 
 ---
 
