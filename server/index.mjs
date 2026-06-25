@@ -2,7 +2,13 @@
 // The React app calls POST /api/generate; Vite forwards it here in dev.
 import 'dotenv/config'
 import express from 'express'
-import { generateLesson, generatePractice } from '../shared/generate.mjs'
+import {
+  generateLesson,
+  generatePractice,
+  activeProvider,
+  requiredKeyName,
+  keyPresent,
+} from '../shared/generate.mjs'
 
 const app = express()
 app.use(express.json())
@@ -10,10 +16,10 @@ app.use(express.json())
 app.post('/api/generate', async (req, res) => {
   const { kind, ...params } = req.body || {}
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return res
-      .status(500)
-      .json({ error: 'ANTHROPIC_API_KEY is not set. Copy .env.example to .env and add your key.' })
+  if (!keyPresent()) {
+    return res.status(500).json({
+      error: `${requiredKeyName()} is not set (provider: ${activeProvider()}). Add it to .env.`,
+    })
   }
 
   try {
@@ -30,8 +36,8 @@ app.post('/api/generate', async (req, res) => {
 
 const PORT = process.env.PORT || 8787
 app.listen(PORT, () => {
-  console.log(`GETS generation proxy → http://localhost:${PORT}`)
-  if (!process.env.ANTHROPIC_API_KEY) {
-    console.warn('⚠  ANTHROPIC_API_KEY not set — add it to .env before generating.')
+  console.log(`GETS generation proxy → http://localhost:${PORT}  (provider: ${activeProvider()})`)
+  if (!keyPresent()) {
+    console.warn(`⚠  ${requiredKeyName()} not set — add it to .env before generating.`)
   }
 })

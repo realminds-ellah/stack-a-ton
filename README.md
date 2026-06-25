@@ -11,19 +11,16 @@
 
 *Every learner gets the support they need.*
 
+<!-- Replace these badges with your ACTUAL stack. Generate more at https://shields.io -->
 ![Status](https://img.shields.io/badge/status-MVP-orange?style=for-the-badge)
-![Platform](https://img.shields.io/badge/platform-Web%20·%20mobile--first-1572B6?style=for-the-badge)
+![Platform](https://img.shields.io/badge/platform-Mobile%20Web-3DDC84?style=for-the-badge)
+![AI](https://img.shields.io/badge/AI-powered-purple?style=for-the-badge)
 ![Offline](https://img.shields.io/badge/offline-first-blue?style=for-the-badge)
 ![Curriculum](https://img.shields.io/badge/DepEd-MATATAG-2E8B57?style=for-the-badge)
-![AI](https://img.shields.io/badge/AI-Claude%20Haiku%204.5-D97757?style=for-the-badge)
-
-![React](https://img.shields.io/badge/React-18-20232A?logo=react&logoColor=61DAFB)
-![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)
-![Express](https://img.shields.io/badge/Express-4-000000?logo=express&logoColor=white)
-![Anthropic](https://img.shields.io/badge/Anthropic-SDK-D97757?logo=anthropic&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
 
 **Team:** Stack-a-ton
-**Hackathon:** ACMTechsprint · June 24–26, 2026
+**Hackathon:** ACM TechSprint × Accenture · `[FILL IN — date]`
 **Live Demo:** `[FILL IN — demo URL / video link]`
 
 </div>
@@ -35,38 +32,51 @@
 1. [Overview](#overview)
 2. [The Problem](#the-problem)
 3. [Why GETS Is Different](#why-gets-is-different)
-4. [How It Works](#how-it-works)
-5. [Tech Stack](#tech-stack)
-6. [Repository Structure](#repository-structure)
-7. [Core Features](#core-features)
-8. [Screenshots](#screenshots)
-9. [Getting Started](#getting-started)
-10. [Environment Variables](#environment-variables)
-11. [Available Scripts](#available-scripts)
-12. [UI/UX Design Direction](#uiux-design-direction)
-13. [MVP Scope & Roadmap](#mvp-scope--roadmap)
-14. [Team](#team)
-15. [Acknowledgements](#acknowledgements)
+4. [Early Validation](#early-validation)
+5. [How It Works](#how-it-works)
+6. [How It's AI-Powered](#how-its-ai-powered)
+7. [Can Students Trust the AI?](#can-students-trust-the-ai)
+8. [Case Study: Grade 7 Mathematics Under MATATAG](#case-study-grade-7-mathematics-under-matatag)
+9. [Core Features](#core-features)
+10. [Tech Stack](#tech-stack)
+11. [Repository Structure](#repository-structure)
+12. [Screenshots](#screenshots)
+13. [Getting Started](#getting-started)
+14. [Environment Variables](#environment-variables)
+15. [UI/UX Design Direction](#uiux-design-direction)
+16. [Pilot Study Design](#pilot-study-design)
+17. [MVP Scope & Roadmap](#mvp-scope--roadmap)
+18. [Business Model & Adoption](#business-model--adoption)
+19. [Team](#team)
+20. [Acknowledgements](#acknowledgements)
 
 ---
 
 ## Overview
 
-GETS is an offline-capable, bilingual (Tagalog + English) AI learning companion for **Grade 7 Filipino students**. It is built on the Department of Education's **MATATAG curriculum** (live for Grade 7 since SY 2024–2025).
+GETS is an AI-powered, **multilingual (mother-tongue-first)**, offline-capable learning companion for **Filipino learners across the education journey — preschool to college** — including learners with dyslexia, ADHD, and autism. It meets each learner in the way that fits them, in the language they think in, at any stage.
 
-Most ed-tech asks *"how do we make this kid learn faster?"* GETS asks *"why did this kid stop trying?"* — because the answer is usually that they were **overwhelmed, not incapable**. GETS teaches a single concept in whichever of five ways actually works for that learner, re-teaches it differently when it doesn't land, and works on a slow or absent connection.
+> **Vision vs. MVP — read this first.** GETS is designed to be **grade-agnostic**: the same engine, teaching strategies, and adaptation logic work at any level, with only the curriculum content changing per stage. For this hackathon, our **MVP proves the concept on one concrete, live cohort — Grade 7 Mathematics (polygons)** — chosen because Grade 7 is part of the first MATATAG rollout (SY 2024–2025). The breadth is the vision; the Grade 7 build is the proof it's real.
 
-**Primary outcomes:**
+Most ed-tech asks *"how do we make this kid learn faster?"* GETS asks *"why did this kid stop trying?"* — because the answer is usually that they were **overwhelmed, not incapable**. When a learner gets something wrong, GETS doesn't say *"Wrong. Try again."* It says *"Let's look at it another way"* — and teaches the same concept in a different way until it lands.
 
-- Meet each learner in the format that fits them, not a one-size lesson
-- Keep struggling learners engaged instead of left behind
-- Run reliably on low-cost devices and patchy connectivity
+GETS serves three people at once:
 
-> **MVP focus:** the build takes one MATATAG competency end-to-end — **Grade 7 Mathematics · Polygons** — through all five teaching formats, in English and Tagalog, online and offline. Subject and topic are isolated in config, so adding more is content work, not re-engineering.
+- **Learners** get a patient tutor that meets them in the format that fits them.
+- **Teachers** get a co-pilot that generates lessons, practice, and progress summaries — which they review and approve.
+- **Parents** get a clear, jargon-free window into what their child is learning and where they're stuck.
 
 ---
 
 ## The Problem
+
+Many Grade 7 students enter junior high school with uneven foundations in reading, numeracy, and confidence. In a typical classroom, one teacher supports many learners at very different levels at once:
+
+- Some students understand the lesson immediately; some need a worked example.
+- Some are too shy to ask questions.
+- Some need the lesson explained in Tagalog or Taglish.
+- Some lose access when the internet is slow or unavailable.
+- Parents often don't know exactly which topic their child is struggling with.
 
 The context is urgent and specific:
 
@@ -75,25 +85,40 @@ The context is urgent and specific:
 - The **MATATAG curriculum** for Grade 7 went live in **SY 2024–2025** — it is the curriculum these students are on *right now*.
 - Connectivity across much of the Philippines is patchy, so an online-only tool doesn't reach the learners who need it most.
 
-GETS is built for exactly this moment, and for the learners traditional classrooms leave behind.
+The deeper problem is not only access to lessons. It is that **many students stop trying when they feel left behind.** GETS is designed to intervene at exactly that moment.
 
 ---
 
 ## Why GETS Is Different
 
-This is not another offline tutor or quiz app. Three things set it apart.
+This is not another offline tutor or quiz app. Four things set it apart.
 
-### 1. One lesson, many ways to learn — and it adapts when you're stuck
+### 1. One concept, many ways to learn — and it adapts when you're stuck
 
-A single MATATAG competency is taught five different ways, and when a lesson doesn't land, GETS re-teaches the same concept in a *different* format rather than repeating it louder. **"Explain a different way"** cycles to the next format; **"I don't get it"** drops straight to the simplest (ELI5) explanation; and getting a practice question wrong surfaces **"Teach me this again."** That adapt-on-failure loop is the heart of the product.
+A single MATATAG competency can be taught five different ways, and when a lesson doesn't land, GETS re-teaches the same concept in a *different* way rather than repeating it louder. That adapt-on-failure loop is the heart of the product.
 
-### 2. Real AI, designed to survive no signal
+### 2. SPED accessibility as a first-class feature
 
-The five formats are **generated live by Claude** — they are five prompting strategies over the same competency, not canned text. Every result is cached in the browser the moment it's generated, and a one-command pre-seed step bakes the entire demo into a local file beforehand. So GETS gives you the richness of live generation **and** a build that keeps working when the Wi-Fi drops.
+Most teams won't touch accessibility. GETS builds in support for dyslexia, ADHD, and autism as switchable accommodations — *supports, not labels* — so the learners traditional classrooms most often leave behind are the ones it serves best.
 
-### 3. Filipino-first, accessible by design
+### 3. Mother-tongue-first, offline-first
 
-Bilingual Tagalog + English throughout — UI *and* lesson content. Read-aloud via the browser's speech engine, short mobile-friendly chunks, and plain-text output with no clutter — designed for low-cost Android phones on low bandwidth.
+The Philippines has over 120 distinct languages — not dialects — and "Tagalog + English" quietly assumes every learner is fluent in Tagalog, which isn't true: for a child in Cebu, Iloilo, or the Ilocos, Tagalog is often itself a second language. GETS teaches in the learner's **mother tongue**, not just the national one, aligning with MATATAG's own mother-tongue-based multilingual education principle. The MVP proves this in **Tagalog and English** (verified quality); the architecture treats language as a parameter, so other Philippine languages plug in as we validate generation quality in each (see roadmap). All of it works offline on low-cost devices, syncing when a connection returns. *This is how GETS reaches the provincial learners that Tagalog-centric and online-only tools leave behind.*
+
+### 4. Grade-agnostic by design
+
+The engine, teaching strategies, and adaptation logic are built **once** and work at any level — preschool to college. Only the curriculum content changes per stage. Grade 7 is where we prove it; the same architecture extends across the whole education journey without re-engineering.
+
+---
+
+## Early Validation
+
+GETS is early-stage, and we're honest about that — no signed pilot yet, no validated pricing (those are explicit next-step priorities). But the direction has been checked with the two audiences that matter most:
+
+- **A practising private high-school teacher** reviewed the concept and said she **would use it in her own classroom** — the strongest signal we could ask for at this stage, because the teacher is the gatekeeper to real adoption.
+- **A professional from Accenture** gave **positive feedback on the concept** in conversation.
+
+> *These are early, informal signals — directional encouragement, not formal endorsements or partnerships. We're naming the roles, not the individuals, out of respect for their time and privacy. Our near-term priority is to turn this interest into a structured pilot with documented outcomes.*
 
 ---
 
@@ -102,41 +127,153 @@ Bilingual Tagalog + English throughout — UI *and* lesson content. Read-aloud v
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Student as Grade 7 Learner
-    participant App as GETS (React)
-    participant Proxy as Express Proxy
-    participant Claude as Claude Haiku 4.5
-    participant Cache as Local Cache
+    actor Learner as Learner · preschool→college (MVP: Grade 7)
+    participant App as GETS App
+    participant AI as AI Layer · Gemini Flash (MATATAG-grounded)
+    participant Cache as Local Cache (offline)
+    actor Teacher as Teacher (co-pilot)
+    actor Parent as Parent
 
-    Note over Student, Cache: Learning loop
-    Student->>App: Opens lesson (Polygons) + picks a format
-    alt Online
-        App->>Proxy: POST /api/generate
-        Proxy->>Claude: Generate lesson / quiz (strategy + language)
-        Claude-->>Proxy: Lesson text / schema-valid questions
-        Proxy-->>App: Result
-        App->>Cache: Save for offline reuse
-    else Offline
-        App->>Cache: Serve the saved version (seeded or previously generated)
-    end
-    App-->>Student: Deliver lesson (+ read-aloud if chosen)
+    Note over Teacher, AI: Setup — teacher reviews & approves
+    Teacher->>AI: Generate lesson / quiz with the co-pilot
+    AI-->>Teacher: Draft grounded in MATATAG content
+    Teacher->>App: Approve content for the class
 
-    App->>Student: 4-question practice check
-    alt Got it wrong
-        Student->>App: "Teach me this again"
-        App-->>Student: Re-teaches the same concept, simpler way
-    else Got it
-        App-->>Student: "Great effort!"
+    Note over Learner, Cache: Teaching loop
+    Learner->>App: Open topic (polygons) · pick mother tongue + format
+    App->>AI: Generate explanation (strategy + language, grounded)
+    AI-->>App: Live lesson in the learner's language
+    App->>Cache: Cache generation for offline reuse
+    App-->>Learner: Deliver lesson (+ SPED layer if enabled)
+    App->>Learner: Generated practice question
+
+    alt Wrong answer / "I don't get it"
+        App->>AI: Re-teach — different strategy or simpler level
+        AI-->>App: Same concept, taught a new way
+        App-->>Learner: "Let's look at it another way"
+    else Correct
+        App-->>Learner: Next question, difficulty adapted
     end
+
+    App->>Cache: Award effort points · update streak & badges
+    Note over Cache, Parent: When online — sync
+    Cache->>Parent: Weekly summary — topic, progress, struggles, one action
 ```
 
-The engine never punishes a wrong answer with a dead end — it routes a failed lesson back to be taught differently, and a cached/seeded copy means a lost connection never blocks the learner.
+The engine never punishes a wrong answer with a dead end — it routes a failed lesson back to be taught differently, in the learner's own language, and remembers which approach worked so the next lesson starts smarter. The teacher stays in the loop as reviewer; the parent gets a calm weekly window when a connection returns.
+
+---
+
+## How It's AI-Powered
+
+GETS uses a **cloud language model to generate every lesson and practice set live** — it is not a library of pre-written content.
+
+- **Explaining concepts in the learner's language:** the AI generates each explanation on demand, in the chosen language — **Tagalog and English in the MVP, other Philippine mother tongues as quality is validated** — using one of **five teaching strategies**, which are five different ways of *prompting* the model:
+  1. **Read and listen** — a clear written explanation, with read-aloud
+  2. **Worked example** — solve one fully, then a similar one with steps to complete
+  3. **Guiding questions** — Socratic teaching, learning by being asked
+  4. **Quest mode** — the concept framed as a short challenge
+  5. **Super simple explanation** — plain-language ELI5, in Tagalog or Taglish
+- **Generating practice:** the AI produces fresh practice questions on the fly, scaled to the topic — not a fixed question bank.
+- **Adapting to level:** the AI evaluates answers, explains *why* a mistake is wrong, and regenerates the concept at a simpler level or in a different strategy.
+
+**Offline resilience:** every AI generation is cached locally, so a learner who loses signal keeps a working lesson and practice set, and new content syncs when they reconnect. *Generation needs connectivity; the cache is what makes it survive low-bandwidth conditions.* Because the AI's output is concise text, it's light over slow connections.
+
+---
+
+## Can Students Trust the AI?
+
+An AI tutor that confidently teaches something wrong is worse than no tutor. GETS earns trust by design:
+
+- **Grounded in the curriculum, not freelancing.** Generation is anchored to the actual DepEd MATATAG competency and content, so the AI explains *verified material* rather than guessing from open-ended prompts.
+- **Teacher-reviewed.** The teacher reviews and approves AI-generated lessons, quizzes, and summaries before they reach students. The AI assists; the teacher remains the authority.
+- **Source-tagged.** Lessons show they're drawn from the student's real Grade 7 MATATAG syllabus, so learners and parents can see it's their actual curriculum.
+- **Designed to defer.** When the AI is unsure, it points the student back to their teacher or textbook rather than inventing an answer.
+
+GETS is a **companion, not a replacement** for the teacher.
+
+---
+
+## Case Study: Grade 7 Mathematics Under MATATAG
+
+> *This is the **MVP proving ground** — one concrete stage chosen to demonstrate an approach designed for the whole education journey. The scenarios below are Grade 7, but the loop they illustrate (teach → check → re-teach differently → adapt) is the same at any level.*
+
+A Grade 7 public-school learner is studying **polygons** — a topic that needs both language comprehension and spatial reasoning, where uneven foundations show up quickly.
+
+### Learner scenario
+
+The teacher explains polygons in class, but the learner doesn't fully grasp the difference between sides, vertices, angles, and types of polygons.
+
+At home, the learner opens GETS on a mobile phone. GETS explains the concept in simple language. When the learner still doesn't understand, GETS **changes the teaching format** rather than repeating itself — the learner can switch between read-and-listen, a worked example, guiding questions, quest mode, or a super-simple explanation, in Tagalog or English.
+
+When the learner answers a practice question incorrectly, GETS responds with **encouragement**, explains the mistake, and re-teaches the concept more simply. The learner keeps going even when the connection drops, because lessons and practice are cached offline. Accessibility supports (dyslexia-friendly font and read-aloud, shorter ADHD-friendly chunks, a calm low-clutter mode) can be switched on at any time.
+
+### Teacher scenario
+
+The Grade 7 Mathematics teacher uses GETS as a **co-pilot** to generate a short lesson plan on polygons, practice questions, a quiz with answer key, simpler explanations for struggling learners, enrichment for advanced learners, and a parent-friendly progress summary. **The teacher reviews and approves all AI-generated content.** GETS doesn't replace the teacher — it helps the teacher personalise support for more students at once.
+
+### Parent scenario
+
+The parent opens a simple dashboard and sees more than a grade: which topic the child practised, which questions they got right, which concepts were difficult, how many times they asked for re-teaching, and suggested home practice for the week.
+
+> *Example summary:* Your child understands basic polygon names but needs more practice identifying sides, vertices, and angles. Try 10 minutes of practice this week using objects at home — windows, notebooks, and tiles.
+
+The parent doesn't need to be a maths expert. GETS gives simple, supportive guidance.
+
+### Why this case matters
+
+The deeper problem isn't access to lessons — it's that students stop trying when they feel left behind. Instead of *"Wrong. Try again,"* GETS says *"Let's look at it another way."* That single shift — from speed to dignity — is what makes GETS useful to learners, teachers, and parents in real Philippine classroom conditions.
+
+---
+
+## Core Features
+
+### Adaptive multi-format lessons (AI-generated)
+
+- Five teaching strategies generated live, in Tagalog or English
+- An **"explain again a different way"** action and automatic **re-teaching** when a lesson doesn't land
+- Mapped to **MATATAG Grade 7 competencies** (Quarter 1: polygons, forces & motion, poetry)
+
+### Ask the tutor anything (conversational)
+
+- A **text chat** where the learner can ask the AI tutor questions in their own words — *"bakit po ganito?"*, "can you explain step 2 again?", "give me a harder one" — instead of only following a fixed lesson path
+- The conversation stays **grounded in the MATATAG topic** and the tutor's supportive, defer-when-unsure behaviour, so it helps rather than wanders or invents
+- Lets a shy learner ask the questions they'd never raise in a class of 40
+
+### SPED accessibility modes
+
+- **Dyslexia** — dyslexia-friendly font, read-aloud, text highlighting while reading
+- **ADHD** — micro-lessons (3–5 min), focus-friendly pacing, frequent rewards
+- **Autism** — predictable layout, reduced visual clutter, structured flow
+
+### Teacher co-pilot
+
+- Generate lesson plans, practice, quizzes with answer keys, differentiated explanations, and parent summaries — all teacher-reviewed before use
+
+### Reward system (designed not to backfire)
+
+- **Effort points** for showing up and trying — not just correct answers
+- **Forgiving streaks** with freezes and a comeback bonus, so a missed day or no signal doesn't punish the learner
+- **Mastery badges** tied to real MATATAG competencies (e.g. "Polygon Master · Q1 Math")
+- **Optional class leaderboard** ranked on effort and consistency, off by default
+
+### Emotion-aware learning
+
+- A gentle, optional mood check-in that adjusts lesson tone — shorter, gentler, more encouraging on a hard day
+
+### Parent dashboard
+
+- A calm weekly summary, **not a gradebook**: what was practised, what's difficult, how often re-teaching was needed, and one concrete suggestion to help at home
+
+### Offline-first
+
+- Cached AI generations work with no connection; progress logs locally and syncs when online
 
 ---
 
 ## Tech Stack
 
-> Everything below is what the app **actually runs on** — no aspirational rows.
+> This table reflects what the app **actually runs on** in the MVP.
 
 ### Core
 
@@ -147,24 +284,24 @@ The engine never punishes a wrong answer with a dead end — it routes a failed 
 | Styling | **Hand-written CSS** (`src/styles.css`) | Warm, accessible, mobile-first UI |
 | Backend | **Express** (local proxy) | Holds the API key; serves `POST /api/generate` so the key never reaches the browser |
 
+### AI / Generation
+
+| Layer | Technology | Purpose |
+| --- | --- | --- |
+| LLM provider | **Google Gemini Flash** (via Google AI Studio API) — model: `gemini-2.5-flash` (override with `GEMINI_MODEL`) | Live generation of lessons & practice |
+| Provider switch | Pluggable via `GETS_PROVIDER` — `gemini` (default) · `groq` · `anthropic` | Swap LLM with one env var, no code change |
+| Prompting | Five teaching-strategy prompts (`shared/prompts.mjs`) | How the model is instructed to teach |
+| Grounding | MATATAG curriculum content | Anchors generation to verified material |
+
 ### Data & Offline
 
 | Layer | Technology | Purpose |
 | --- | --- | --- |
-| Local storage | **Browser `localStorage`** (`gets-cache-v1`) | Caches every generated lesson/quiz for instant offline reload |
-| Offline seed | **`public/seed-cache.json`** via `npm run seed` | Pre-generates all five formats × EN/TL + a practice set before the demo, so it runs with zero connection |
+| Local storage | **Browser `localStorage`** (`gets-cache-v1`) | Cached lessons & practice — offline-first |
+| Offline seed | **`public/seed-cache.json`** via `npm run seed` | Pre-generates all formats × languages before a demo, so it runs with zero connection |
 | Offline detection | `navigator.onLine` + cache fallback | Falls back to the saved version and shows an "offline" badge |
 
-### AI / Content Layer
-
-| Layer | Technology | Purpose |
-| --- | --- | --- |
-| Generation | **Anthropic API** via `@anthropic-ai/sdk` | Live lesson + practice generation |
-| Model | **Claude Haiku 4.5** (`claude-haiku-4-5`; override with `GETS_MODEL`, e.g. `claude-sonnet-4-6`) | Fast and cheap — suited to short bilingual lessons over low bandwidth |
-| Structured output | **JSON Schema** (Anthropic structured outputs) | Guarantees parseable, schema-valid 4-choice quizzes |
-| Speech | **Browser Web Speech API** (`fil-PH` / `en-US`) | Read-aloud for the "Read & listen" format |
-
-> **Be honest about the AI:** GETS uses **live Claude (Haiku 4.5) generation** for both lessons and quizzes — the five "ways to learn" are five prompting strategies, not hand-written content. To run reliably at a demo and on patchy connections, every result is **cached in the browser**, and `npm run seed` pre-generates the whole demo into `public/seed-cache.json` ahead of time. So: **AI-generated, then cached** — online it generates fresh, offline it serves the saved copy. State it plainly; the cache-for-offline design reads as competence.
+> **Be honest about the AI in your demo:** generation happens via a cloud model and is cached for offline use. That hybrid is *how the app works in low-bandwidth conditions*. State it plainly — it reads as competence.
 
 ---
 
@@ -172,75 +309,44 @@ The engine never punishes a wrong answer with a dead end — it routes a failed 
 
 ```
 gets/
-├── index.html                # Vite entry
 ├── public/
-│   └── seed-cache.json        # Pre-generated offline content (created by `npm run seed`)
-│
+│   └── seed-cache.json         # pre-generated offline cache (npm run seed)
 ├── shared/
-│   ├── generate.mjs           # Anthropic SDK calls — lesson + practice generation
-│   └── prompts.mjs            # System prompt, the 5 strategy prompts, practice JSON schema
-│
+│   ├── prompts.mjs             # five teaching-strategy prompts + practice schema
+│   └── generate.mjs            # LLM calls (Gemini / Groq / Claude), key from env
 ├── server/
-│   └── index.mjs              # Express proxy: holds the API key, serves POST /api/generate
-│
+│   └── index.mjs               # local proxy: POST /api/generate (holds the key)
 ├── scripts/
-│   └── preseed.mjs            # Pre-generates seed-cache.json before the demo
-│
+│   └── preseed.mjs             # one-time: generate the offline cache
 ├── src/
-│   ├── main.jsx               # React entry
-│   ├── App.jsx                # Lesson view, 5 strategy pills, EN/TL, adapt-on-failure
+│   ├── App.jsx                 # lesson + practice flow, strategy/language switching
 │   ├── components/
-│   │   └── Practice.jsx       # 4-question quiz; wrong answer → re-teach simpler
+│   │   └── Practice.jsx        # AI-generated adaptive drills
 │   ├── lib/
-│   │   ├── api.js             # Calls /api/generate; falls back to cache when offline
-│   │   └── cache.js           # localStorage cache + seed loader
-│   ├── strings.js             # Subject/topic config + EN/TL UI copy
-│   └── styles.css             # All styling
-│
+│   │   ├── api.js              # live fetch → cache fallback (offline)
+│   │   └── cache.js            # local-storage cache + seed loader
+│   ├── strings.js              # UI copy + subject/topic/strategy config
+│   ├── styles.css              # warm, accessible, mobile-first theme
+│   └── main.jsx
 ├── .env.example
-├── vite.config.js             # Dev proxy: /api → :8787
-└── package.json
+├── vite.config.js
+├── package.json
+└── README.md
 ```
-
----
-
-## Core Features
-
-### Adaptive multi-format lessons
-
-- **Five live-generated ways to teach one concept:** Read & listen (text + browser voice), Worked example (scaffolding fades), Guiding questions (Socratic), Quest mode (gamified), and Super simple (ELI5, plain Tagalog/English)
-- **"Explain a different way"** cycles to the next format; **"I don't get it"** jumps straight to the simplest explanation
-- **Adapt-on-failure:** a wrong practice answer surfaces **"Teach me this again"**, which re-teaches the concept a simpler way
-- Scoped end-to-end to one MATATAG competency — **Grade 7 Math · Polygons** — with subject/topic isolated in config so new topics are a content change, not code
-
-### Bilingual & accessible
-
-- Full **English / Tagalog** toggle across the UI *and* the generated lessons and quizzes
-- **Read-aloud** via the browser speech engine (`fil-PH` / `en-US`)
-- Short, mobile-friendly chunks (enforced in the prompt), plain-text output (no markdown clutter), large readable type — friendly to low-literacy and low-bandwidth users
-- Mood-sensitive tone (gentler, shorter on a hard day) is wired into the generation layer; the in-app mood check-in is on the roadmap
-
-### Offline-first
-
-- Every generated lesson and quiz is cached in `localStorage` for instant offline reload
-- `npm run seed` pre-generates all five formats × both languages + a practice set into `public/seed-cache.json`, loaded on first run, so **the whole demo works with no connection**
-- An **"Offline — showing saved lesson"** badge appears when serving cached content
 
 ---
 
 ## Screenshots
 
-> `[FILL IN — add real screens once the build is camera-ready. Grid below matches what's currently built.]`
+> `[FILL IN — add real screens here once the build produces them.]`
 
-| **1. Lesson — Read & listen** | **2. Switch format** |
-| --- | --- |
-| `[screenshot]` | `[screenshot]` |
-| One concept, with read-aloud | "Explain a different way" cycles the five formats |
+| **Home / Welcome** | **Multi-format Lesson** | **Adaptive Practice** |
+| --- | --- | --- |
+| `[screenshot]` | `[screenshot]` | `[screenshot]` |
 
-| **3. Practice** | **4. Offline mode** |
-| --- | --- |
-| `[screenshot]` | `[screenshot]` |
-| 4 questions; wrong → "Teach me this again" | Seeded cache serves lessons with no connection |
+| **Rewards** | **Accessibility Settings** | **Parent Dashboard** |
+| --- | --- | --- |
+| `[screenshot]` | `[screenshot]` | `[screenshot]` |
 
 ---
 
@@ -248,99 +354,149 @@ gets/
 
 ### Prerequisites
 
-- **Node.js 18+** and **npm**
-- An **Anthropic API key** — get one at [console.anthropic.com](https://console.anthropic.com/settings/keys)
+- **Node.js 18+**
+- An API key for **one** provider — **Google Gemini Flash** is the default (free tier, no card; key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey))
 
 ### Installation
 
 ```bash
-# Clone the repository
 git clone [FILL IN — repo URL]
 cd gets
-
-# Install dependencies
 npm install
-
-# Add your Anthropic API key
-cp .env.example .env
-# then edit .env and set ANTHROPIC_API_KEY=sk-ant-...
-
-# (Recommended, while online) pre-generate the offline demo cache
-npm run seed
-
-# Start the app (React client on :5173 + generation proxy on :8787)
-npm run dev
+cp .env.example .env          # then add your API key
+npm run dev                   # app on http://localhost:5173
 ```
 
-Open the printed local URL (default `http://localhost:5173`).
+### Make it work offline (before a demo, while online)
+
+```bash
+npm run seed                  # generates public/seed-cache.json for the topic
+npm run build
+npm run preview               # serve the build — now works offline from the seed
+```
+
+> **Keep your API key out of the repo.** `.env` is already in `.gitignore` — never commit it.
 
 ---
 
 ## Environment Variables
 
-Create a `.env` file based on `.env.example`:
-
 | Variable | Required | Description |
 | --- | --- | --- |
-| `ANTHROPIC_API_KEY` | **Yes** | Your Anthropic API key. Used by the proxy and the pre-seed script; never sent to the browser. |
-| `GETS_MODEL` | No | Model for generation. Defaults to `claude-haiku-4-5`; set to `claude-sonnet-4-6` for richer output. |
-| `PORT` | No | Port for the local generation proxy. Defaults to `8787` (Vite proxies `/api` here). |
-
----
-
-## Available Scripts
-
-| Command | Description |
-| --- | --- |
-| `npm run dev` | Run the React client (`:5173`) and the generation proxy (`:8787`) together |
-| `npm run dev:client` | Run only the Vite dev server |
-| `npm run dev:server` | Run only the Express generation proxy |
-| `npm run seed` | Pre-generate `public/seed-cache.json` for offline use (run once, online) |
-| `npm run build` | Production build (Vite) |
-| `npm run preview` | Preview the production build |
+| `GETS_PROVIDER` | No | `gemini` (default) · `groq` · `anthropic`. Auto-detects by which key is set if unset. |
+| `GEMINI_API_KEY` | If using Gemini | Google AI Studio key for Gemini Flash generation |
+| `GEMINI_MODEL` | No | Defaults to `gemini-2.5-flash` |
+| `GROQ_API_KEY` | If using Groq | Groq key (free) — model defaults to `llama-3.3-70b-versatile` |
+| `ANTHROPIC_API_KEY` | If using Claude | Anthropic key — model defaults to `claude-haiku-4-5` (needs paid credit) |
+| `PORT` | No | Generation proxy port (default `8787`) |
 
 ---
 
 ## UI/UX Design Direction
 
-### Visual identity
+- **Visual identity:** warm, friendly, calm — a supportive companion, never a strict teacher. Rounded corners, soft colours, generous spacing, large readable text, high contrast.
+- **Multilingual, mother-tongue-first:** the learner's own language, not just the national one. MVP in Tagalog + English (mixing naturally as Taglish); other Philippine languages on the roadmap.
+- **Accessibility-first:** clear hierarchy, dyslexia-friendly typography option, read-aloud and text-size controls, a calm reduced-clutter mode.
+- **Responsive:** mobile-first, portrait, optimised for low-cost devices and low bandwidth.
 
-- Warm, friendly, and calm — a supportive companion, never a strict teacher
-- Rounded corners, soft colours, generous spacing, large readable text, high contrast
-- Bilingual interface mixing Tagalog and English naturally (Taglish)
+---
 
-### Accessibility-first
+## Pilot Study Design
 
-- Clear hierarchy, no clutter, plain-text lessons (no dense markdown)
-- Read-aloud and an EN/TL toggle throughout
-- Short, chunked content to reduce cognitive load
+A real school pilot can test GETS using one Grade 7 Mathematics topic.
 
-### Responsive strategy
+**Setup:** Grade 7 · Mathematics · Polygons · 1–2 weeks · one or two sections · student/school mobile devices · online when available, offline when needed.
 
-- Mobile-first, portrait, optimised for low-cost Android devices and low bandwidth
+**Pre-test:** basic polygon identification; sides, vertices, and angles; confidence rating before using GETS.
+
+**Intervention:** students learn polygons through the five teaching formats, complete practice, and receive re-teaching after wrong answers; teachers monitor class-level progress; parents receive a short summary.
+
+**Post-test:** parallel polygon assessment; confidence rating; teacher and parent feedback; offline-usage check.
+
+**Success indicators:** improvement from pre- to post-test; fewer repeated mistakes; more completed practice attempts; increased confidence; teacher-reported time saved; parent understanding of weak areas.
+
+> *Targets are illustrative until the pilot runs — frame any figures as goals, not results.*
 
 ---
 
 ## MVP Scope & Roadmap
 
-### Built in this MVP (for the hackathon)
+### In the MVP (built for the hackathon)
 
-- **One competency end-to-end** — Grade 7 Math · **Polygons** — through all **five formats**
-- **Adapt-on-failure loop**: explain-a-different-way, drop-to-simplest, and re-teach-after-wrong-answer
-- **Bilingual EN/TL** UI and generated content, with **read-aloud**
-- **4-question practice** with auto-checking and encouraging feedback
-- **Offline-first**: browser cache + one-command pre-seed so the demo runs with no connection
+- **One stage, proven deeply: Grade 7** — a live MATATAG cohort
+- **3 subjects** — Mathematics, Science, English (the highest-weighted MATATAG areas)
+- **1 competency shown end-to-end** (polygons) through all five AI-generated formats, with SPED modes live
+- **AI generation + offline cache**, forgiving streak, effort points, competency badges
+- **Parent dashboard** and **teacher co-pilot**
 
 ### Roadmap (deliberately out of MVP)
 
-- More subjects, topics, and full quarter coverage — *content authoring, not re-engineering*
-- Rewards: effort points, forgiving streaks, MATATAG mastery badges
-- Parent dashboard (calm weekly summary) and onboarding learning-preference quiz
-- In-app mood check-in UI (the generation layer already supports mood-aware tone)
-- Named SPED accommodations: OpenDyslexic font, ADHD micro-pacing, autism calm-mode toggles
-- Progress sync to a backend when a connection returns
+GETS is designed for the **whole education journey — preschool to college**. The MVP proves it on Grade 7; expansion is content authoring on a fixed engine, not re-engineering:
 
-The architecture is **subject-agnostic** — subject/topic live in config (`src/strings.js`, `shared/prompts.mjs`), so every new topic plugs in as content.
+- **Grade by grade across the journey** — outward to other junior high grades, up to senior high and college, and down to early years. This *rides the MATATAG phased rollout*, which is itself being implemented grade by grade through to 2027–2028.
+- **Mother-tongue expansion** — beyond Tagalog and English to the most-spoken Philippine languages, in order of reach (by 2020 Census home-language data): **Cebuano/Bisaya** (~16% of households), **Hiligaynon/Ilonggo** (~7%), **Ilocano** (~7%), then **Bikol** and **Waray**. Each is added only once we've **validated generation quality** in it — we won't ship a language the model handles poorly, because broken-language teaching fails the learner. Language is a parameter in the architecture, so this is validation-and-authoring, not re-engineering.
+- **More subjects and full quarter coverage** per stage
+- A **light teacher layer** so schools can deploy GETS to classes (without becoming a heavy LMS)
+- **On-device generation** for true offline AI as devices and models allow
+- **Additional SPED accommodations**
+
+The architecture is **grade- and subject-agnostic** — the engine, prompts, rewards, and accessibility layers are built once, and every new stage or subject plugs in as content.
+
+---
+
+## Business Model & Adoption
+
+GETS will **never charge the struggling students who are its reason for existing.** Someone other than the learner pays — and *which* payer comes first is a deliberate, sequenced choice, not "everyone at once."
+
+### The phased wedge (who pays, in what order)
+
+We serve all Filipino learners — but we win one beachhead first, prove outcomes, then expand. Going after every payer at once is how young ed-tech ventures stall.
+
+- **Phase 1 — beachhead: CSR/grant-funded pilots + private schools & NGO learning centres.** These move fast, have technology budgets or grant backing, and feel the personalised-and-SPED-support gap most acutely. Crucially, a **CSR- or grant-funded pilot lets us serve public-school learners — our actual mission — while a foundation or corporate partner pays**, resolving the who-pays tension directly. *(Programmes like this one are a natural on-ramp.)*
+- **Phase 2 — scale: DepEd / LGU.** The biggest impact and the truest mission fit, but multi-year procurement and unfunded at student scale. This is the **long game we earn with Phase 1 pilot evidence** — not a Year 1 revenue line.
+- **Cross-subsidy throughout:** paying private schools and partners underwrite free public-school access. The people who can pay fund the people who can't.
+
+### Unit economics (the structural advantage)
+
+GETS's cost to serve is **low and mostly variable API cost**, not expensive per-client engineering:
+
+- Lessons and practice are **generated by Gemini Flash** (a low-cost model) and **cached and reused**, so the marginal cost of an additional student is **cents in API calls**, not a custom build.
+- The **engine, prompts, accessibility, and rewards are built once** and reused across every learner, school, and grade — content is the only per-stage cost, and it's authoring, not re-engineering.
+- This is a genuinely different cost structure from approaches that train a bespoke model per client.
+
+### Pricing model (illustrative — to be validated)
+
+We use a **flat per-school annual licence** — the model the ed-tech industry recommends for schools because it gives them *budget predictability* and decouples cost from fluctuating enrolment. Public schools are free (funded via grants/CSR and cross-subsidy); the licence applies to paying private schools and institutions.
+
+The figures below are an **illustrative hypothesis, not validated pricing** — they're reasoned against the real market, and testing them is a Month 1–3 priority:
+
+| School size | Indicative annual licence | Reasoning |
+| --- | --- | --- |
+| Small private school | `₱[lower band]` | A small fraction of per-student tuition |
+| Medium | `₱[mid band]` | Scales with student population served |
+| Large / progressive | `₱[upper band]` | Larger reach, more subjects/grades live |
+
+**Why these are plausible (the anchors):**
+
+- Philippine **private high-school tuition averages ~₱150,000/student/year**, and tech-forward schools charge ₱200,000–₱800,000; more affordable private schools sit around ₱30,000–₱44,000/student. A *whole-school* supplementary tool only needs to cost a **small fraction of one student's tuition** to be an easy yes.
+- The K–12 online-learning market in the Philippines is large (≈USD 1.8B), and government has earmarked ≈₱1.5B for digital education — so budgets for tools like this exist on both the private and public sides.
+- Our **cost to serve is cents per student**, so even modest licence fees carry healthy margin — pricing pressure is a strategic choice, not a survival constraint.
+
+> **We have not yet validated these numbers with real schools** — no signed pilot, no confirmed price. We're showing the *model and the reasoning* rather than a falsely precise figure. The first paying pilot, with documented cost-to-serve and a tested licence price, is our explicit near-term goal. *(This is the discipline the market itself recommends: 60%+ of ed-tech startups cite pricing as their hardest problem, and the answer is systematic testing, not a guessed number.)*
+
+### Why this is defensible (the moat)
+
+The AI itself is a commodity — anyone can call a model, and on-device small models are improving fast. GETS's durable advantage is **everything built around the model**, none of which a general chatbot replicates:
+
+- **MATATAG-grounding** — aligned to the actual DepEd curriculum, so it teaches the right thing and doesn't hallucinate generic content
+- **Pedagogical design** — five teaching strategies and the adapt-on-failure loop, not just answers
+- **SPED depth** — accessibility most tools won't touch
+- **Three-user fit** — learner, teacher, and parent, matching how Philippine education actually works
+- **Filipino-first localisation** — Tagalog/Taglish, offline-capable, built for low-cost devices
+
+### Adoption path
+
+GETS is **MATATAG-native** (the precondition for any DepEd alignment) and **offline-capable** (reaching rural and remote schools online-only tools can't). The realistic route is **funded pilot → evidence of learning outcomes → expansion** — proven on a private/NGO/CSR beachhead, then scaled toward public-school and DepEd reach. Not instant national rollout; a sequence with a clear first step.
 
 ---
 
@@ -348,20 +504,23 @@ The architecture is **subject-agnostic** — subject/topic live in config (`src/
 
 **Stack-a-ton**
 
+> `[FILL IN — add each member with role and LinkedIn.]`
+
 | Member | Role | LinkedIn |
 | --- | --- | --- |
-| Ellah Benerado | `[FILL IN]` | `[link]` |
-| Eliesha Mae Francisco | `[FILL IN]` | `[link]` |
-| Osyris Benedict Fajardo | `[FILL IN]` | `[link]` |
-| Lance Miguel Evangelista | `[FILL IN]` | `[link]` |
+| `[Name]` | `[Role]` | `[link]` |
 
 ---
 
 ## Acknowledgements
 
-- Curriculum alignment based on the DepEd **MATATAG Curriculum** (Grade 7, SY 2024–2025), Department of Education, Philippines.
-- AI generation powered by **Anthropic's Claude** (`@anthropic-ai/sdk`).
-- Built with **React**, **Vite**, and **Express**.
+> *List only what the prototype actually ships — an acknowledgement implies use. Some of these carry attribution requirements (see notes), so keep this section accurate.*
+
+- **Live generation** powered by **Google Gemini Flash** via the Google AI Studio / Gemini API.
+- **Curriculum alignment and lesson grounding** based on the DepEd **MATATAG Curriculum Guides** (Grade 7, SY 2024–2025), Department of Education, Philippines — used under DepEd's open-access terms (Executive Order No. 2, s. 2016; share-and-adapt with attribution).
+- **OpenDyslexic** typeface by Abbie Gonzalez ([opendyslexic.org](https://opendyslexic.org)), used under the **SIL Open Font License 1.1**, for the dyslexia accessibility mode. *(Attribution required by licence.)*
+- **Read-aloud** powered by the browser's built-in **Web Speech API**.
+- `[FILL IN — any other libraries or tools you actually use]`
 
 ---
 
