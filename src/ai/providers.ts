@@ -7,6 +7,7 @@
 //      no backend and no on-device model yet.
 
 import type { AIProvider, GenerateOptions, Lang } from "./types";
+import { lookup as offlineLookup } from "./offlineBank";
 
 // ── 1. Gemini Flash (online, via backend proxy) ─────────────────────────────────
 // Point VITE_AI_ENDPOINT at your backend route. The backend holds the API key and
@@ -78,8 +79,11 @@ export class GemmaProvider implements AIProvider {
 }
 
 // ── 3. Mock (always-available fallback) ──────────────────────────────────────────
-// Keeps the UI/demo working before the backend + on-device model exist. Replace
-// nothing here — once GeminiFlash/Gemma are reachable, the router prefers them.
+// Keeps the UI/demo working before the backend + on-device model exist, and powers
+// the offline demo: it consults the authored offline answer bank (offlineBank.ts)
+// so a disconnected tutor gives topic-specific replies, not one generic line. Order
+// of preference: caller's domain fallback → offline bank match → generic line.
+// This is the router's terminal fallback, so it also catches online backend errors.
 const MOCK_REPLY: Record<Lang, string> = {
   tl: "Magandang tanong! Ang aming mga aralin ay naka-align sa MATATAG curriculum. Nais mo bang matuto pa?",
   en: "Great question! Our lessons are aligned with the MATATAG curriculum. Want to learn more?",
@@ -94,10 +98,12 @@ export class MockProvider implements AIProvider {
     return true;
   }
 
-  async generate(_prompt: string, opts?: GenerateOptions): Promise<string> {
+  async generate(prompt: string, opts?: GenerateOptions): Promise<string> {
     await new Promise((r) => setTimeout(r, 450)); // simulate latency
+    const lang = opts?.lang ?? "tl";
     // Prefer a caller-supplied domain fallback (e.g. the teacher co-pilot's tailored
-    // canned answer); otherwise a generic, language-aware line.
-    return opts?.fallback ?? MOCK_REPLY[opts?.lang ?? "tl"] ?? MOCK_REPLY.tl;
+    // canned answer); then an authored offline-bank match for the question; finally a
+    // generic, language-aware line so we never dead-end.
+    return opts?.fallback ?? offlineLookup(prompt, lang) ?? MOCK_REPLY[lang] ?? MOCK_REPLY.tl;
   }
 }
