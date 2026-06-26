@@ -2448,6 +2448,7 @@ function AuthScreen({ onAuthed }: { onAuthed: (a: Account) => void }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [school, setSchool] = useState("");
   const [error, setError] = useState("");
   const roles: { id: Role; label: string; emoji: string }[] = [
     { id: "student", label: "Mag-aaral", emoji: "🎓" },
@@ -2459,7 +2460,7 @@ function AuthScreen({ onAuthed }: { onAuthed: (a: Account) => void }) {
   const submit = () => {
     setError("");
     const res = mode === "signup"
-      ? signUp({ username, password, role, name, avatar })
+      ? signUp({ username, password, role, name, avatar, school })
       : logIn(username, password);
     if (!res.ok) { setError(res.error || "Something went wrong."); return; }
     onAuthed(res.account!);
@@ -2488,7 +2489,13 @@ function AuthScreen({ onAuthed }: { onAuthed: (a: Account) => void }) {
         {mode === "signup" && (
           <div>
             <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground block mb-2">PANGALAN / DISPLAY NAME</label>
-            <input value={name} onChange={e => setName(e.target.value)} placeholder="Hal. Jasmin" className={inputCls} style={inputStyle} />
+            <input value={name} onChange={e => setName(e.target.value)} placeholder="Hal. Juan Dela Cruz" className={inputCls} style={inputStyle} />
+          </div>
+        )}
+        {mode === "signup" && (
+          <div>
+            <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground block mb-2">PAARALAN / SCHOOL</label>
+            <input value={school} onChange={e => setSchool(e.target.value)} placeholder="Hal. Rizal National High School" className={inputCls} style={inputStyle} />
           </div>
         )}
         <div>

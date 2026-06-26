@@ -43,19 +43,20 @@ export function listAccounts(): Account[] {
   return load();
 }
 
-export function signUp(d: { username: string; password: string; role: Role; name: string; avatar: string }):
+export function signUp(d: { username: string; password: string; role: Role; name: string; avatar: string; school?: string }):
   { ok: boolean; error?: string; account?: Account } {
   const username = d.username.trim();
   if (username.length < 3) return { ok: false, error: "Username must be at least 3 characters." };
   if (d.password.length < 4) return { ok: false, error: "Password must be at least 4 characters." };
   if (!d.name.trim()) return { ok: false, error: "Please enter a display name." };
   if (!d.avatar) return { ok: false, error: "Please pick an avatar." };
+  if (!d.school || !d.school.trim()) return { ok: false, error: "Please enter your school." };
   const accts = load();
   if (accts.some(a => a.username.toLowerCase() === username.toLowerCase()))
     return { ok: false, error: "That username is already taken." };
   const account: Account = {
     id: uid(), username, role: d.role, name: d.name.trim(), avatar: d.avatar,
-    pass: hash(d.password), createdAt: Date.now(),
+    school: d.school.trim(), pass: hash(d.password), createdAt: Date.now(),
   };
   accts.push(account);
   save(accts);
