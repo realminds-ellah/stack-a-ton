@@ -634,33 +634,33 @@ If you want to help build the next generation of inclusive, offline-first Filipi
 
 <table>
   <tr>
-    <td align="center" width="25%">
+    <td align="center" valign="top" width="25%">
       <img src="public/img/team/Ellah.jpeg" width="150" alt="Ellah Benerado"/><br/>
       <strong>Ellah Benerado</strong><br/>
       <sub>Co-Founder · Full-Stack &amp; AI Engineer</sub><br/>
       <br/>
       <a href="https://www.linkedin.com/in/ellahvate"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
     </td>
-    <td align="center" width="25%">
+    <td align="center" valign="top" width="25%">
       <img src="public/img/team/Eliesha.jpg" width="150" alt="Eliesha Mae Francisco"/><br/>
       <strong>Eliesha Mae Francisco</strong><br/>
       <sub>Co-Founder · UI Design &amp; Learning Experience Developer (LXD)</sub><br/>
       <br/>
       <a href="https://www.linkedin.com/in/elifrncsc"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
     </td>
-    <td align="center" width="25%">
-      <img src="public/img/team/Lance.png" width="150" alt="Lance Evangelista"/><br/>
-      <strong>Lance Evangelista</strong><br/>
-      <sub>Co-Founder · Business Strategy &amp; Model Evaluator</sub><br/>
-      <br/>
-      <a href="https://www.linkedin.com/in/lance-miguel-evangelista-58691a315"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
-    </td>
-    <td align="center" width="25%">
+    <td align="center" valign="top" width="25%">
       <img src="public/img/team/Osyris.jpg" width="150" alt="Osyris Fajardo"/><br/>
       <strong>Osyris Fajardo</strong><br/>
       <sub>Co-Founder · Front-End &amp; Learning Experience Developer (LXD)</sub><br/>
       <br/>
       <a href="https://www.linkedin.com/in/osyris-benedict-fajardo-237b1738b"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
+    </td>
+    <td align="center" valign="top" width="25%">
+      <img src="public/img/team/Lance.png" width="150" alt="Lance Evangelista"/><br/>
+      <strong>Lance Evangelista</strong><br/>
+      <sub>Co-Founder · Business Strategy &amp; Model Evaluator</sub><br/>
+      <br/>
+      <a href="https://www.linkedin.com/in/lance-miguel-evangelista-58691a315"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
     </td>
   </tr>
 </table>
@@ -674,6 +674,19 @@ If you want to help build the next generation of inclusive, offline-first Filipi
 ---
 
 ## Acknowledgements
+
+### People who shaped GETS
+
+Our heartfelt thanks to the testers and reviewers who gave their time to try the prototype and pressure-test the idea. Their feedback is the basis of the [Early Validation](#early-validation) above, and each brought a different lens:
+
+- **Monica Moreno** — *private teacher* — tested the prototype with real learners and gave the classroom-practitioner perspective on whether GETS earns a place in day-to-day teaching.
+- **Franceska Petallana** — *BS Psychology, Our Lady of Fatima University (OLFU)* — reviewed the inclusive, UDL-based design and its fit for neurodivergent learners.
+- **Stephanie Prado** — *BS Psychology, Far Eastern University (FEU)* — reviewed the learning experience and accessibility through a developmental-psychology lens.
+- **Irra Negros** — *BS Entrepreneurship, Polytechnic University of the Philippines (PUP) Sta. Maria* — pressure-tested the business model and roadmap for real-world scalability.
+- **Analyn Rirao Panlaqui** — *parent of a high-school and a grade-school student* — gave the home-use and parent perspective on engagement and screen time.
+- **The Grade 9 learners of Section 9-Kudarat** — *Fortunato F. Halili National Agricultural School (FFNAS)* — tested the app hands-on as students, giving the most important signal of all: whether GETS actually helps learners.
+
+### Tools, data &amp; services
 
 > *Lists what the prototype actually ships — an acknowledgement implies use. Some carry attribution requirements (see notes), so this section is kept accurate.*
 
@@ -689,17 +702,6 @@ If you want to help build the next generation of inclusive, offline-first Filipi
 **Planned (acknowledged when the feature ships):**
 
 - **OpenDyslexic** typeface by Abbie Gonzalez ([opendyslexic.org](https://opendyslexic.org)), under the **SIL Open Font License 1.1**, for the dyslexia accessibility mode on the roadmap. *(Attribution will be required once bundled.)*
-
-### People who shaped GETS
-
-Our heartfelt thanks to the testers and reviewers who gave their time to try the prototype and pressure-test the idea. Their feedback is the basis of the [Early Validation](#early-validation) above, and each brought a different lens:
-
-- **Monica Moreno** — *private teacher* — tested the prototype with real learners and gave the classroom-practitioner perspective on whether GETS earns a place in day-to-day teaching.
-- **Franceska Petallana** — *BS Psychology, Our Lady of Fatima University (OLFU)* — reviewed the inclusive, UDL-based design and its fit for neurodivergent learners.
-- **Stephanie Prado** — *BS Psychology, Far Eastern University (FEU)* — reviewed the learning experience and accessibility through a developmental-psychology lens.
-- **Irra Negros** — *BS Entrepreneurship, Polytechnic University of the Philippines (PUP) Sta. Maria* — pressure-tested the business model and roadmap for real-world scalability.
-- **Analyn Rirao Panlaqui** — *parent of a high-school and a grade-school student* — gave the home-use and parent perspective on engagement and screen time.
-- **The Grade 9 learners of Section 9-Kudarat** — *Fortunato F. Halili National Agricultural School (FFNAS)* — tested the app hands-on as students, giving the most important signal of all: whether GETS actually helps learners.
 
 ---
 
