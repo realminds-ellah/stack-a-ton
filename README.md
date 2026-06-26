@@ -20,8 +20,8 @@
 ![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
 
 **Team:** Stack-a-ton
-**Hackathon:** ACM TechSprint × Accenture · `[FILL IN — date]`
-**Live Demo:** `[FILL IN — demo URL / video link]`
+**Hackathon:** ACM TechSprint × Accenture · June 2026
+**Live Demo:** https://gets-app.vercel.app
 
 </div>
 
@@ -279,57 +279,54 @@ The deeper problem isn't access to lessons — it's that students stop trying wh
 
 | Layer | Technology | Purpose |
 | --- | --- | --- |
-| Framework | **React 18 + Vite 5** | Mobile-first single-page web app |
-| Language | **JavaScript** (JSX, ES modules) | App + server code |
-| Styling | **Hand-written CSS** (`src/styles.css`) | Warm, accessible, mobile-first UI |
-| Backend | **Express** (local proxy) | Holds the API key; serves `POST /api/generate` so the key never reaches the browser |
+| Framework | **React 18 + Vite 6 + TypeScript** | Mobile-first single-page web app |
+| Styling | **Tailwind CSS v4** + shadcn/ui | Warm, accessible, mobile-first UI |
+| Auth | **Local-first accounts** (`localStorage`) | Sign-up / log-in for student, parent, teacher — no backend required |
+| Backend | **Vercel serverless functions** (`api/*.js`) | Hold the API key; proxy generation + TTS so the key never reaches the browser |
+| Hosting | **Vercel** | Deployed at gets-app.vercel.app |
 
 ### AI / Generation
 
 | Layer | Technology | Purpose |
 | --- | --- | --- |
-| LLM provider | **Google Gemini Flash** (via Google AI Studio API) — model: `gemini-2.5-flash` (override with `GEMINI_MODEL`) | Live generation of lessons & practice |
-| Provider switch | Pluggable via `GETS_PROVIDER` — `gemini` (default) · `groq` · `anthropic` | Swap LLM with one env var, no code change |
-| Prompting | Five teaching-strategy prompts (`shared/prompts.mjs`) | How the model is instructed to teach |
+| LLM provider | **Google Gemini Flash** (`gemini-2.5-flash`, override with `GEMINI_MODEL`) | Live generation for the student tutor + teacher co-pilot |
+| Provider router | `src/ai/` — online **Gemini Flash** → on-device **Gemma** (planned) → **mock** fallback | One swappable seam; the offline path is ready for the native build |
+| Voice | **Gemini TTS** (`api/tts.js`) with Web-Speech fallback, plus **speech-to-text** (Web Speech API) | Two-way voice tutor — talk to it, it talks back |
+| Prompting | Five teaching strategies + per-language system prompts | How the model is instructed to teach |
 | Grounding | MATATAG curriculum content | Anchors generation to verified material |
 
-### Data & Offline
+### Accessibility & Offline
 
 | Layer | Technology | Purpose |
 | --- | --- | --- |
-| Local storage | **Browser `localStorage`** (`gets-cache-v1`) | Cached lessons & practice — offline-first |
-| Offline seed | **`public/seed-cache.json`** via `npm run seed` | Pre-generates all formats × languages before a demo, so it runs with zero connection |
-| Offline detection | `navigator.onLine` + cache fallback | Falls back to the saved version and shows an "offline" badge |
+| SPED settings | Global a11y context — dyslexia font, large text, calm mode, read-aloud, bionic reading, zen, focus micro-lessons, and Dyslexia/ADHD/Autism profiles | Switchable accommodations applied app-wide |
+| Languages | Tagalog / English / Cebuano / Hiligaynon UI switch | Mother-tongue-first |
+| Offline | Local accounts + cached TTS today; on-device **Gemma** planned | Works without a connection (live generation needs connectivity; the native build adds on-device AI) |
 
-> **Be honest about the AI in your demo:** generation happens via a cloud model and is cached for offline use. That hybrid is *how the app works in low-bandwidth conditions*. State it plainly — it reads as competence.
+> **Be honest about the AI in your demo:** generation runs on a cloud model (Gemini Flash) via a serverless proxy; the on-device Gemma path is the next milestone for true offline generation.
 
 ---
 
 ## Repository Structure
 
 ```
-gets/
-├── public/
-│   └── seed-cache.json         # pre-generated offline cache (npm run seed)
-├── shared/
-│   ├── prompts.mjs             # five teaching-strategy prompts + practice schema
-│   └── generate.mjs            # LLM calls (Gemini / Groq / Claude), key from env
+stack-a-ton/
+├── api/
+│   ├── generate.js          # serverless: POST /api/generate → Gemini Flash
+│   └── tts.js               # serverless: POST /api/tts → Gemini TTS (audio)
 ├── server/
-│   └── index.mjs               # local proxy: POST /api/generate (holds the key)
-├── scripts/
-│   └── preseed.mjs             # one-time: generate the offline cache
+│   ├── gemini.mjs           # Gemini chat call (key from env)
+│   └── gemini-tts.mjs       # Gemini TTS call → WAV
 ├── src/
-│   ├── App.jsx                 # lesson + practice flow, strategy/language switching
-│   ├── components/
-│   │   └── Practice.jsx        # AI-generated adaptive drills
-│   ├── lib/
-│   │   ├── api.js              # live fetch → cache fallback (offline)
-│   │   └── cache.js            # local-storage cache + seed loader
-│   ├── strings.js              # UI copy + subject/topic/strategy config
-│   ├── styles.css              # warm, accessible, mobile-first theme
-│   └── main.jsx
-├── .env.example
-├── vite.config.js
+│   ├── app/App.tsx          # all screens: auth, onboarding, student/parent/teacher
+│   ├── ai/                  # provider router (Gemini/Gemma/mock), useAI, TTS controller
+│   ├── auth/store.ts        # local-first accounts + session
+│   ├── components/ui/       # shadcn/ui primitives
+│   ├── imports/             # mascot art + image assets
+│   └── styles/              # Tailwind theme + fonts
+├── public/                  # favicon + OG share image
+├── vercel.json
+├── vite.config.ts
 ├── package.json
 └── README.md
 ```
@@ -360,22 +357,24 @@ gets/
 ### Installation
 
 ```bash
-git clone [FILL IN — repo URL]
-cd gets
+git clone https://github.com/realminds-ellah/stack-a-ton.git
+cd stack-a-ton
 npm install
-cp .env.example .env          # then add your API key
+cp .env.example .env.local    # then add your GEMINI_API_KEY
 npm run dev                   # app on http://localhost:5173
 ```
 
-### Make it work offline (before a demo, while online)
+### Deploy (Vercel)
 
 ```bash
-npm run seed                  # generates public/seed-cache.json for the topic
-npm run build
-npm run preview               # serve the build — now works offline from the seed
+npm run build                 # sanity-check the production build
+# then: push to GitHub and "Import Project" on vercel.com (auto-detects Vite),
+# or use the CLI:  npx vercel --prod
 ```
 
-> **Keep your API key out of the repo.** `.env` is already in `.gitignore` — never commit it.
+Set `GEMINI_API_KEY` (and optionally `GEMINI_MODEL`) as **environment variables** in Vercel — the `api/` folder deploys as serverless functions automatically, and the key stays server-side.
+
+> **Keep your API key out of the repo.** `.env.local` is in `.gitignore` — never commit it.
 
 ---
 
@@ -383,12 +382,12 @@ npm run preview               # serve the build — now works offline from the s
 
 | Variable | Required | Description |
 | --- | --- | --- |
-| `GETS_PROVIDER` | No | `gemini` (default) · `groq` · `anthropic`. Auto-detects by which key is set if unset. |
-| `GEMINI_API_KEY` | If using Gemini | Google AI Studio key for Gemini Flash generation |
-| `GEMINI_MODEL` | No | Defaults to `gemini-2.5-flash` |
-| `GROQ_API_KEY` | If using Groq | Groq key (free) — model defaults to `llama-3.3-70b-versatile` |
-| `ANTHROPIC_API_KEY` | If using Claude | Anthropic key — model defaults to `claude-haiku-4-5` (needs paid credit) |
-| `PORT` | No | Generation proxy port (default `8787`) |
+| `GEMINI_API_KEY` | Yes (for AI) | Google AI Studio key — used by both chat and TTS. Server-side only. |
+| `GEMINI_MODEL` | No | Chat model, defaults to `gemini-2.5-flash` |
+| `GEMINI_TTS_MODEL` | No | Voice model, defaults to `gemini-2.5-flash-preview-tts` |
+| `GEMINI_TTS_VOICE` | No | TTS voice, defaults to `Aoede` |
+| `VITE_AI_ENDPOINT` | No | Frontend → generation route (default `/api/generate`) |
+| `VITE_TTS_ENDPOINT` | No | Frontend → TTS route (default `/api/tts`) |
 
 ---
 
