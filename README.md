@@ -41,11 +41,12 @@
 14. [Environment Variables](#environment-variables)
 15. [UI/UX Design Direction](#uiux-design-direction)
 16. [Pilot Study Design](#pilot-study-design)
-17. [MVP Scope & Roadmap](#mvp-scope--roadmap)
-18. [Business Model & Adoption](#business-model--adoption)
-19. [The Opportunity](#the-opportunity)
-20. [Team](#team)
-21. [Acknowledgements](#acknowledgements)
+17. [Roadmap](#roadmap)
+18. [Go-to-Market & Adoption](#go-to-market--adoption)
+19. [Business Model & Financials](#business-model--financials)
+20. [The Opportunity](#the-opportunity)
+21. [Team](#team)
+22. [Acknowledgements](#acknowledgements)
 
 ---
 
@@ -101,7 +102,7 @@ Most teams won't touch accessibility. GETS builds in support for dyslexia, ADHD,
 
 ### 3. Mother-tongue-first, offline-first
 
-The Philippines has over 120 distinct languages — not dialects — and "Tagalog + English" quietly assumes every learner is fluent in Tagalog, which isn't true: for a child in Cebu, Iloilo, or the Ilocos, Tagalog is often itself a second language. GETS teaches in the learner's **mother tongue**, not just the national one, aligning with MATATAG's own mother-tongue-based multilingual education principle. The MVP proves this in **Tagalog and English** (verified quality); the architecture treats language as a parameter, so other Philippine languages plug in as we validate generation quality in each (see roadmap). All of it works offline on low-cost devices, syncing when a connection returns. *This is how GETS reaches the provincial learners that Tagalog-centric and online-only tools leave behind.*
+The Philippines has over 120 distinct languages — not dialects — and "Tagalog + English" quietly assumes every learner is fluent in Tagalog, which isn't true: for a child in Cebu, Iloilo, or the Ilocos, Tagalog is often itself a second language. GETS teaches in the learner's **mother tongue**, not just the national one, aligning with MATATAG's own mother-tongue-based multilingual education principle. The MVP ships **six Philippine languages — Tagalog, English, Bisaya, Hiligaynon, Ilocano, and Bikol**; the architecture treats language as a parameter, so more plug in as we validate generation quality in each (see roadmap). All of it works offline on low-cost devices, syncing when a connection returns. *This is how GETS reaches the provincial learners that Tagalog-centric and online-only tools leave behind.*
 
 ### 4. Grade-agnostic by design
 
@@ -138,7 +139,7 @@ sequenceDiagram
     autonumber
     actor Learner as Learner · preschool→college (MVP: Grade 7)
     participant App as GETS App
-    participant AI as AI Layer · Gemini Flash (MATATAG-grounded)
+    participant AI as AI Layer · on-device Gemma 270M + cloud Flash-Lite (MATATAG-grounded)
     participant Cache as Local Cache (offline)
     actor Teacher as Teacher (co-pilot)
     actor Parent as Parent
@@ -175,9 +176,9 @@ The engine never punishes a wrong answer with a dead end — it routes a failed 
 
 ## How It's AI-Powered
 
-GETS uses a **cloud language model to generate every lesson and practice set live** — it is not a library of pre-written content.
+GETS generates every lesson and practice set **live** — it is not a library of pre-written content. Generation runs on a **hybrid engine**: an **on-device model (Gemma 3 270M)** generates **offline by default**, and **Gemini 2.5 Flash-Lite (cloud)** adds higher-fidelity content seeding and live personalisation when a connection is available.
 
-- **Explaining concepts in the learner's language:** the AI generates each explanation on demand, in the chosen language — **Tagalog and English in the MVP, other Philippine mother tongues as quality is validated** — using one of **five teaching strategies**, which are five different ways of *prompting* the model:
+- **Explaining concepts in the learner's language:** the AI generates each explanation on demand, in the chosen language — **six Philippine languages in the MVP (Tagalog, English, Bisaya, Hiligaynon, Ilocano, Bikol)**, with more added as generation quality is validated — using one of **five teaching strategies**, which are five different ways of *prompting* the model:
   1. **Read and listen** — a clear written explanation, with read-aloud
   2. **Worked example** — solve one fully, then a similar one with steps to complete
   3. **Guiding questions** — Socratic teaching, learning by being asked
@@ -186,7 +187,7 @@ GETS uses a **cloud language model to generate every lesson and practice set liv
 - **Generating practice:** the AI produces fresh practice questions on the fly, scaled to the topic — not a fixed question bank.
 - **Adapting to level:** the AI evaluates answers, explains *why* a mistake is wrong, and regenerates the concept at a simpler level or in a different strategy.
 
-**Offline resilience:** every AI generation is cached locally, so a learner who loses signal keeps a working lesson and practice set, and new content syncs when they reconnect. *Generation needs connectivity; the cache is what makes it survive low-bandwidth conditions.* Because the AI's output is concise text, it's light over slow connections.
+**Offline by default:** because the on-device model (Gemma 3 270M) runs locally, a learner generates and keeps working lessons and practice **with no connection at all** — the cloud layer (Gemini 2.5 Flash-Lite) is an *enhancement, not a requirement*. Generations are cached, and richer cloud content syncs down when online. Because the output is concise text, it's also light over slow connections.
 
 ---
 
@@ -250,7 +251,7 @@ GETS rests on **five pillars**:
 
 ### Adaptive multi-format lessons (AI-generated)
 
-- Five teaching strategies generated live, in Tagalog or English
+- Five teaching strategies generated live, in the learner's mother tongue
 - An **"explain again a different way"** action and automatic **re-teaching** when a lesson doesn't land
 - Mapped to **MATATAG Grade 7 competencies** (Quarter 1: polygons, forces & motion, poetry)
 
@@ -287,7 +288,7 @@ GETS rests on **five pillars**:
 
 ### Offline-first
 
-- Cached AI generations work with no connection; progress logs locally and syncs when online
+- **On-device generation (Gemma 3 270M)** works with no connection at all; progress logs locally and richer cloud content syncs when online
 
 ---
 
@@ -309,8 +310,9 @@ GETS rests on **five pillars**:
 
 | Layer | Technology | Purpose |
 | --- | --- | --- |
-| LLM provider | **Google Gemini Flash** (`gemini-2.5-flash`, override with `GEMINI_MODEL`) | Live generation for the student tutor + teacher co-pilot |
-| Provider router | `src/ai/` — online **Gemini Flash** → on-device **Gemma** (planned) → **mock** fallback | One swappable seam; the offline path is ready for the native build |
+| Generation — offline | **Gemma 3 270M** on-device | Offline-default generation — lessons & practice with no connection, ₱0 marginal cost |
+| Generation — online | **Google Gemini 2.5 Flash-Lite** (cloud, override with `GEMINI_MODEL`) | Enhancement layer — higher-fidelity content seeding + live personalisation when connected |
+| Provider router | `src/ai/` — on-device **Gemma 3 270M** (offline default) → **Gemini 2.5 Flash-Lite** (cloud enhancement) → **mock** fallback | One swappable seam across the hybrid |
 | Voice | **Gemini TTS** (`api/tts.js`) with Web-Speech fallback, plus **speech-to-text** (Web Speech API) | Two-way voice tutor — talk to it, it talks back |
 | Prompting | Five teaching strategies + per-language system prompts | How the model is instructed to teach |
 | Grounding | MATATAG curriculum content | Anchors generation to verified material |
@@ -320,10 +322,10 @@ GETS rests on **five pillars**:
 | Layer | Technology | Purpose |
 | --- | --- | --- |
 | SPED settings | Global a11y context — dyslexia font, large text, calm mode, read-aloud, bionic reading, zen, focus micro-lessons, and Dyslexia/ADHD/Autism profiles | Switchable accommodations applied app-wide |
-| Languages | Tagalog / English / Cebuano / Hiligaynon UI switch | Mother-tongue-first |
-| Offline | Local accounts + cached TTS today; on-device **Gemma** planned | Works without a connection (live generation needs connectivity; the native build adds on-device AI) |
+| Languages | Tagalog · English · Bisaya · Hiligaynon · Ilocano · Bikol | Mother-tongue-first |
+| Offline | **On-device Gemma 3 270M generation** + local accounts + cached TTS + PWA precache | Full lesson delivery runs with no connection; the cloud layer only enhances |
 
-> **Be honest about the AI in your demo:** generation runs on a cloud model (Gemini Flash) via a serverless proxy; the on-device Gemma path is the next milestone for true offline generation.
+> **The hybrid in one line:** full lesson delivery runs **offline on-device (Gemma 3 270M)**; **Gemini 2.5 Flash-Lite** is an online enhancement layer (content seeding + live personalisation), never a dependency.
 
 ---
 
@@ -332,14 +334,14 @@ GETS rests on **five pillars**:
 ```
 stack-a-ton/
 ├── api/
-│   ├── generate.js          # serverless: POST /api/generate → Gemini Flash
+│   ├── generate.js          # serverless: POST /api/generate → Gemini 2.5 Flash-Lite (cloud)
 │   └── tts.js               # serverless: POST /api/tts → Gemini TTS (audio)
 ├── server/
 │   ├── gemini.mjs           # Gemini chat call (key from env)
 │   └── gemini-tts.mjs       # Gemini TTS call → WAV
 ├── src/
 │   ├── app/App.tsx          # all screens: auth, onboarding, student/parent/teacher
-│   ├── ai/                  # provider router (Gemini/Gemma/mock), useAI, TTS controller
+│   ├── ai/                  # provider router (Gemma on-device / Flash-Lite cloud / mock), useAI, TTS controller
 │   ├── auth/store.ts        # local-first accounts + session
 │   ├── components/ui/       # shadcn/ui primitives
 │   ├── imports/             # mascot art + image assets
@@ -380,7 +382,7 @@ stack-a-ton/
 ### Prerequisites
 
 - **Node.js 18+**
-- An API key for **one** provider — **Google Gemini Flash** is the default (free tier, no card; key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey))
+- An API key for the cloud enhancement layer — **Google Gemini 2.5 Flash-Lite** (free tier, no card; key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey)). *Offline on-device generation needs no key.*
 
 ### Installation
 
@@ -411,7 +413,7 @@ Set `GEMINI_API_KEY` (and optionally `GEMINI_MODEL`) as **environment variables*
 | Variable | Required | Description |
 | --- | --- | --- |
 | `GEMINI_API_KEY` | Yes (for AI) | Google AI Studio key — used by both chat and TTS. Server-side only. |
-| `GEMINI_MODEL` | No | Chat model, defaults to `gemini-2.5-flash` |
+| `GEMINI_MODEL` | No | Cloud enhancement model, defaults to `gemini-2.5-flash-lite` |
 | `GEMINI_TTS_MODEL` | No | Voice model, defaults to `gemini-2.5-flash-preview-tts` |
 | `GEMINI_TTS_VOICE` | No | TTS voice, defaults to `Aoede` |
 | `VITE_AI_ENDPOINT` | No | Frontend → generation route (default `/api/generate`) |
@@ -446,70 +448,50 @@ A real school pilot can test GETS using one Grade 7 Mathematics topic.
 
 ---
 
-## MVP Scope & Roadmap
+## Roadmap
 
-### In the MVP (built for the hackathon)
+GETS is **grade-agnostic by design**. The MVP proves the engine on Grade 7; every stage beyond it is content authoring on a fixed architecture — not a rebuild.
 
-- **One stage, proven deeply: Grade 7** — a live MATATAG cohort
-- **3 subjects** — Mathematics, Science, English (the highest-weighted MATATAG areas)
-- **1 competency shown end-to-end** (polygons) through all five AI-generated formats, with SPED modes live
-- **AI generation + offline cache**, forgiving streak, effort points, competency badges
-- **Parent dashboard** and **teacher co-pilot**
+### Now — MVP (hackathon build)
 
-### Roadmap (deliberately out of MVP)
+- Grade 7 **Mathematics, Science, English** (MATATAG, SY 2024–2025)
+- **Polygons** competency end-to-end: five AI-generated teaching formats, SPED modes, offline cache
+- **Gemma 3 270M (on-device)** as the offline-default generation model, with **Gemini 2.5 Flash-Lite (cloud)** as a connected-mode enhancement layer for higher-fidelity content seeding and live personalisation
+- **Teacher co-pilot**, **parent dashboard**, forgiving streak & effort rewards
+- Six languages: **Tagalog, English, Bisaya, Hiligaynon, Ilocano, Bikol**
 
-GETS is designed for the **whole education journey — preschool to college**. The MVP proves it on Grade 7; expansion is content authoring on a fixed engine, not re-engineering:
+### Near term — pilot & validate (Months 1–6)
 
-- **Grade by grade across the journey** — outward to other junior high grades, up to senior high and college, and down to early years. This *rides the MATATAG phased rollout*, which is itself being implemented grade by grade through to 2027–2028.
-- **Mother-tongue expansion** — beyond Tagalog and English to the most-spoken Philippine languages, in order of reach (by 2020 Census home-language data): **Cebuano/Bisaya** (~16% of households), **Hiligaynon/Ilonggo** (~7%), **Ilocano** (~7%), then **Bikol** and **Waray**. Each is added only once we've **validated generation quality** in it — we won't ship a language the model handles poorly, because broken-language teaching fails the learner. Language is a parameter in the architecture, so this is validation-and-authoring, not re-engineering.
-- **More subjects and full quarter coverage** per stage
-- A **light teacher layer** so schools can deploy GETS to classes (without becoming a heavy LMS)
-- **On-device generation** for true offline AI as devices and models allow
-- **Additional SPED accommodations**
+- Structured pilot with a private school or NGO partner; documented **pre/post learning outcomes**
+- Validate pricing with the first paying school
+- Validate the hybrid-generation cost assumptions (below) against real usage telemetry — including the **Flash-Lite quality trade-off** for SPED variants and live personalisation
+- Expand to remaining Grade 7 quarters and subjects
+
+### Medium term — grade expansion (Year 1–2)
+
+- **Grade 8 and Grade 10** (next MATATAG phased-rollout cohorts)
+- Elementary-school entry
+- A **light teacher dashboard** for class-level deployment (without becoming a heavy LMS)
+
+### Long term — full journey & language expansion (Year 2+)
+
+- **Preschool through college** — riding the MATATAG phased rollout (grade by grade through 2027–2028)
+- Further **mother-tongue expansion** by reach (2020 Census home-language data) — adding **Waray** and beyond, each only once generation quality is validated in it
+- Continued **on-device generation** as device capability allows, with Gemini 2.5 Flash-Lite (or successor cloud models) remaining the connected enhancement layer
+- **DepEd / LGU procurement track**, backed by Phase 1–2 pilot evidence
 
 The architecture is **grade- and subject-agnostic** — the engine, prompts, rewards, and accessibility layers are built once, and every new stage or subject plugs in as content.
 
 ---
 
-## Business Model & Adoption
+## Go-to-Market & Adoption
 
-GETS will **never charge the struggling students who are its reason for existing.** Someone other than the learner pays — and *which* payer comes first is a deliberate, sequenced choice, not "everyone at once."
+GETS wins **one beachhead first**, proves outcomes, then expands. Chasing every payer at once is how ed-tech ventures stall.
 
-### The phased wedge (who pays, in what order)
+- **Phase 1 — Private Schools & NGO Learning Centres.** These move fastest: they have technology budgets, feel the SPED-and-personalisation gap most acutely, and decide without multi-year procurement cycles. A paying private school **underwrites free access for public-school learners — cross-subsidy by design.** Government innovation and digital-development programmes (e.g. **DOST**, **DTI**) and corporate **CSR/foundations** fund public-school pilots directly.
+- **Phase 2 — DepEd / LGU Scale.** The truest mission fit, but the longest sales cycle — the **long game earned with Phase 1–2 pilot evidence and documented learning outcomes**, not a Year 1 revenue line. GETS is **MATATAG-native** and **offline-capable**, the two preconditions DepEd procurement will require. *(The online enhancement layer (see Cost Structure) is an optional upgrade, not a dependency — full lesson delivery still runs entirely offline, so this precondition holds regardless of connectivity.)*
 
-We serve all Filipino learners — but we win one beachhead first, prove outcomes, then expand. Going after every payer at once is how young ed-tech ventures stall.
-
-- **Phase 1 — beachhead: CSR/grant-funded pilots + private schools & NGO learning centres.** These move fast, have technology budgets or grant backing, and feel the personalised-and-SPED-support gap most acutely. Crucially, a **CSR- or grant-funded pilot lets us serve public-school learners — our actual mission — while a foundation or corporate partner pays**, resolving the who-pays tension directly. Government innovation and digital-development programmes (e.g. **DOST**, **DTI**) are a natural grant source here, alongside corporate CSR. *(Programmes like this one are a natural on-ramp.)*
-- **Phase 2 — scale: DepEd / LGU.** The biggest impact and the truest mission fit, but multi-year procurement and unfunded at student scale. This is the **long game we earn with Phase 1 pilot evidence** — not a Year 1 revenue line.
-- **Cross-subsidy throughout:** paying private schools and partners underwrite free public-school access. The people who can pay fund the people who can't.
-
-### Unit economics (the structural advantage)
-
-GETS's cost to serve is **low and mostly variable API cost**, not expensive per-client engineering:
-
-- Lessons and practice are **generated by Gemini Flash** (a low-cost model) and **cached and reused**, so the marginal cost of an additional student is **cents in API calls**, not a custom build.
-- The **engine, prompts, accessibility, and rewards are built once** and reused across every learner, school, and grade — content is the only per-stage cost, and it's authoring, not re-engineering.
-- This is a genuinely different cost structure from approaches that train a bespoke model per client.
-
-### Pricing model (illustrative — to be validated)
-
-We use a **flat per-school annual licence** — the model the ed-tech industry recommends for schools because it gives them *budget predictability* and decouples cost from fluctuating enrolment. Public schools are free (funded via grants/CSR and cross-subsidy); the licence applies to paying private schools and institutions.
-
-The figures below are an **illustrative hypothesis, not validated pricing** — they're reasoned against the real market, and testing them is a Month 1–3 priority:
-
-| School size | Indicative annual licence | Reasoning |
-| --- | --- | --- |
-| Small private school | `₱[lower band]` | A small fraction of per-student tuition |
-| Medium | `₱[mid band]` | Scales with student population served |
-| Large / progressive | `₱[upper band]` | Larger reach, more subjects/grades live |
-
-**Why these are plausible (the anchors):**
-
-- Philippine **private high-school tuition averages ~₱150,000/student/year**, and tech-forward schools charge ₱200,000–₱800,000; more affordable private schools sit around ₱30,000–₱44,000/student. A *whole-school* supplementary tool only needs to cost a **small fraction of one student's tuition** to be an easy yes.
-- The K–12 online-learning market in the Philippines is large (≈USD 1.8B), and government has earmarked ≈₱1.5B for digital education — so budgets for tools like this exist on both the private and public sides.
-- Our **cost to serve is cents per student**, so even modest licence fees carry healthy margin — pricing pressure is a strategic choice, not a survival constraint.
-
-> **We have not yet validated these numbers with real schools** — no signed pilot, no confirmed price. We're showing the *model and the reasoning* rather than a falsely precise figure. The first paying pilot, with documented cost-to-serve and a tested licence price, is our explicit near-term goal. *(This is the discipline the market itself recommends: 60%+ of ed-tech startups cite pricing as their hardest problem, and the answer is systematic testing, not a guessed number.)*
+The gatekeeper to real adoption is the **teacher** — and GETS already has directional validation from a practising private high-school teacher who said she would use it in her own classroom.
 
 ### Why this is defensible (the moat)
 
@@ -519,11 +501,117 @@ The AI itself is a commodity — anyone can call a model, and on-device small mo
 - **Pedagogical design** — five teaching strategies and the adapt-on-failure loop, not just answers
 - **SPED depth** — accessibility most tools won't touch
 - **Three-user fit** — learner, teacher, and parent, matching how Philippine education actually works
-- **Filipino-first localisation** — Tagalog/Taglish, offline-capable, built for low-cost devices
+- **Filipino-first localisation** — six mother tongues, offline-capable, built for low-cost devices
 
-### Adoption path
+---
 
-GETS is **MATATAG-native** (the precondition for any DepEd alignment) and **offline-capable** (reaching rural and remote schools online-only tools can't). The realistic route is **funded pilot → evidence of learning outcomes → expansion** — proven on a private/NGO/CSR beachhead, then scaled toward public-school and DepEd reach. Not instant national rollout; a sequence with a clear first step.
+## Business Model & Financials
+
+**Core principle: GETS will never charge the learners it exists to serve. Someone else pays.**
+
+### Who pays
+
+| Payer | Notes (annual renewal) |
+| --- | --- |
+| Private schools | Scales with enrolment |
+| CSR / foundations | Funds public-school pilots |
+| NGO learning centres | Case-by-case |
+| Public schools | Funded via cross-subsidy and grants |
+
+### Subscription tiers
+
+| Tier | Annual revenue (₱) | Students | Parents | Teachers | Total savings (₱) |
+| --- | --- | --- | --- | --- | --- |
+| **Small** | 90,000 | 300 | 600 | 40 | 0 (baseline) |
+| **Medium** | 170,000 | 600 | 1,200 | 80 | 10,000 |
+| **Large** | 300,000 | 1,100 | 2,200 | 120 | 30,000 |
+
+### Pricing model & cost structure
+
+**Pilot pricing: ₱300 per student per year** — all-in for the student + linked parents (2 per student) + proportional teacher access. Not a per-school flat licence at this stage. *(For the post-pilot DepEd/private-school phase, a flat-licence table can sit alongside this — ask and we'll keep both.)*
+
+**Pilot cohort:** 300 students · 600 parents (300 child-summaries) · 40 teachers.
+
+**Cost structure — hybrid generation architecture.** **Gemma 3 270M** handles offline generation at **₱0 marginal cost**; **Gemini 2.5 Flash-Lite** handles the paid online layer (content seeding + live personalisation that can't be pre-cached). Cloud pricing: **$0.10 / 1M input tokens, $0.40 / 1M output tokens** (Google's published rate, June 2026). Exchange rate: **₱61 ≈ US$1**.
+
+**Annualised call volumes** (10-month active school year; 2 months summer = zero AI usage):
+
+| Role | Calls/year | Basis |
+| --- | --- | --- |
+| Student | 2,000 | High-engagement online usage: hints, ask-tutor chat, practice regeneration |
+| Teacher | 3,000 | Heaviest user — lesson-plan co-pilot, quiz generation, differentiated explanations, class reports |
+| Parent (per child) | 250 | Weekly progress summary + occasional "explain this to me" |
+
+**1. One-time — seeding the cached content library** (cost is per piece of content, not per student):
+
+| Item | Estimate |
+| --- | --- |
+| Grade 7 competencies (Math, Science, English) | ~120 |
+| Teaching formats per competency | 5 |
+| SPED variants per format | 3 |
+| **Total seed generation calls** | **1,800** |
+| **Total one-time cost** | **≈ $0.86 (≈ ₱53)** |
+
+**2. Recurring — AI inference, per unit per year:**
+
+| Role | Calls/year | Cost/call | Cost/year (1 unit) |
+| --- | --- | --- | --- |
+| Student | 2,000 | $0.00019 | $0.38 (₱23.18) |
+| Teacher | 3,000 | $0.00048 | $1.44 (₱87.84) |
+| Parent (per child) | 250 | $0.00016 | $0.04 (₱2.39) |
+
+**3. Cohort-level AI bill** (300 students · 40 teachers · 300 child-summaries):
+
+| Group | Annual AI cost |
+| --- | --- |
+| Students (300) | $114.00 (₱6,954) |
+| Teachers (40) | $57.60 (₱3,514) |
+| Parents (300 summaries) | $11.78 (₱718) |
+| **Total AI inference** | **$183.38 (≈ ₱11,186)** |
+
+**Cloud infrastructure (annual, full stack — not just AI):**
+
+| Item | Annual cost |
+| --- | --- |
+| Supabase Pro (DB, auth, storage, realtime) | ₱18,300 |
+| Vercel Pro (hosting, 1 seat, functions, bandwidth) | ₱14,640 |
+| Push notifications (Firebase Cloud Messaging) | ₱0 (free tier) |
+| Domain | ₱732 |
+| Monitoring / error tracking | ₱0 (free tier) |
+| **Total infrastructure** | **₱33,672** |
+
+At **940 total accounts** (300 + 600 + 40), this stays comfortably inside Supabase/Vercel Pro limits — no overage charges yet.
+
+**Total loaded OpEx (incl. 25% labour overhead):**
+
+| Component | Amount |
+| --- | --- |
+| AI inference | ₱11,186 |
+| Cloud infrastructure | ₱33,672 |
+| One-time content seed | ₱53 |
+| Subtotal | ₱44,911 |
+| Labour overhead (25%) | ₱11,228 |
+| **Total loaded OpEx** | **₱56,138** |
+
+**Pricing check:**
+
+| Metric | Value |
+| --- | --- |
+| Revenue (300 students × ₱300) | ₱90,000 |
+| Total loaded OpEx | ₱56,138 |
+| **Surplus** | **₱33,862** |
+| **Margin** | **37.6%** |
+| Break-even price/student (worst case, students carry 100%) | ₱187.13 |
+
+**Per-unit loaded OpEx** (AI cost + fair share of infra/seed/labour):
+
+| Role | AI/year | Shared infra+seed+labour/year | Total loaded OpEx/year |
+| --- | --- | --- | --- |
+| Student | ₱23 | ₱70 | ₱93 |
+| Teacher | ₱88 | ₱70 | ₱158 |
+| Parent (per child) | ₱2 | ₱70 | ₱73 |
+
+> **Quality trade-off (still unresolved):** Flash-Lite's quality-vs-cost trade-off against full Flash has **not** been empirically validated against GETS's actual content — especially SPED variants and live personalisation, where output fidelity has real pedagogical stakes. Treat the figures above as **validated math on a cost ceiling, not yet a validated quality decision.**
 
 ---
 
@@ -589,11 +677,12 @@ If you want to help build the next generation of inclusive, offline-first Filipi
 
 **Currently used in the MVP:**
 
-- **Live generation** powered by **Google Gemini Flash** (`gemini-2.5-flash`) via the Google AI Studio / Gemini API.
+- **Live generation** via a **hybrid engine** — **Gemma 3 270M** on-device (offline default) with **Google Gemini 2.5 Flash-Lite** as the cloud enhancement layer (Google AI Studio / Gemini API), behind a serverless proxy so the API key never reaches the browser.
 - **Curriculum alignment and lesson grounding** based on the DepEd **MATATAG Curriculum Guides** (Grade 7, SY 2024–2025), Department of Education, Philippines — used under DepEd's open-access terms (Executive Order No. 2, s. 2016; share-and-adapt with attribution).
-- **Read-aloud** powered by the browser's built-in **Web Speech API** (`speechSynthesis`).
-- Built with **React**, **Vite**, **Express**, and **Node.js**.
-- Provider layer is pluggable: **Groq** (Llama 3.3 70B) and the **Anthropic SDK** (Claude) are supported as alternate LLM backends via one env var.
+- **Voice** via the browser's built-in **Web Speech API** (`speechSynthesis` for read-aloud + speech recognition for talk-to-tutor), with **Gemini TTS** for higher-quality narration when online.
+- **Installable PWA & offline precache** via **Vite Plugin PWA** (Workbox).
+- **UI** built with **React 18**, **Vite 6**, **TypeScript**, **Tailwind CSS v4**, **shadcn/ui**, **lucide-react** icons, **Recharts**, and **Motion**; self-hosted typography via **Fontsource** (Plus Jakarta Sans, Nunito, Lexend, JetBrains Mono).
+- **Hosting & serverless** generation/TTS functions on **Vercel**; runtime on **Node.js**.
 
 **Planned (acknowledged when the feature ships):**
 
