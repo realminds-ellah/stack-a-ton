@@ -294,6 +294,23 @@ GETS rests on **five pillars**:
 
 ## Tech Stack
 
+<div align="center">
+
+![React](https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite_6-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-000000?style=for-the-badge&logo=shadcnui&logoColor=white)
+
+![Node.js](https://img.shields.io/badge/Node.js-5FA04E?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![PWA](https://img.shields.io/badge/PWA_offline-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white)
+
+![Gemma](https://img.shields.io/badge/Gemma_3_270M-on--device-4285F4?style=for-the-badge&logo=google&logoColor=white)
+![Gemini](https://img.shields.io/badge/Gemini_2.5_Flash--Lite-cloud-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)
+
+</div>
+
 > This table reflects what the app **actually runs on** in the MVP.
 
 ### Core
