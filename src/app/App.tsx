@@ -22,6 +22,8 @@ import faceAplus from "../imports/gets-face-aplus.png";
 import faceSad from "../imports/gets-face-sad.png";
 import faceShocked from "../imports/gets-face-shocked.png";
 import { useAI, speak, stopSpeaking, useSpeaking } from "../ai";
+import { signUp, logIn, getSession, logOut, updateAccount, listAccounts } from "../auth/store";
+import type { Account } from "../auth/store";
 
 const P = "#185FA5";
 const PD = "#0F4A87";
@@ -29,7 +31,7 @@ const A = "#EF9F27";
 const SURF = "#E6F1FB";
 
 type Screen =
-  | "splash" | "roleSelect"
+  | "splash" | "auth" | "roleSelect"
   | "onboarding_language" | "onboarding_assessment"
   | "onboarding_style_result" | "onboarding_profile"
   | "mood_check" | "studentApp" | "parentApp" | "teacherApp";
@@ -247,7 +249,7 @@ const STR: Record<string, Record<Lang, string>> = {
   navLearn:   { tl: "Matuto",                           en: "Learn",                        ceb: "Tun-i",                           hil: "Tun-i" },
   navGame:    { tl: "Laro",                             en: "Game",                         ceb: "Dula",                            hil: "Hampang" },
   navRewards: { tl: "Gantimpala",                       en: "Rewards",                      ceb: "Ganti",                           hil: "Padya" },
-  navSped:    { tl: "SPED",                             en: "SPED",                         ceb: "SPED",                            hil: "SPED" },
+  navSped:    { tl: "Settings",                         en: "Settings",                     ceb: "Settings",                        hil: "Settings" },
 };
 const LangContext = React.createContext<{ lang: Lang; setLang: (l: Lang) => void }>({ lang: "tl", setLang: () => {} });
 const useLang = () => React.useContext(LangContext);
@@ -1745,7 +1747,7 @@ function ParentApp({ onBack }: { onBack: () => void }) {
                 <div className="flex items-center gap-2 mb-3">
                   <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-black" style={{ backgroundColor: "#059669" }}>T</div>
                   <div>
-                    <p className="font-bold text-xs" style={{ color: "#1A1A1A" }}>Mrs. Corazon Dela Cruz</p>
+                    <p className="font-bold text-xs" style={{ color: "#1A1A1A" }}>{name}</p>
                     <p className="text-[9px] text-muted-foreground">Class Teacher · Rizal NHS</p>
                   </div>
                   <span className="ml-auto text-[9px] text-muted-foreground font-medium">Today</span>
@@ -1944,11 +1946,108 @@ const TEACHER_AI_RESPONSES: Record<string, string> = {
   adhd: "Great ADHD-friendly classroom activities:\n\n1. **Station Rotation** — Students rotate between 3 activity stations every 12 minutes\n2. **Think-Pair-Share** — Short individual think time, then partner discussion\n3. **Exit Ticket** — 2-minute written reflection at end of class\n4. **Gamified Drills** — Use the GETS Bilis-Isip Speed Sprint for vocabulary review\n5. **Movement-based Review** — Students stand if answer is TRUE, sit if FALSE\n\nAll of these work well within the MATATAG curriculum framework.",
 };
 
-function TeacherApp({ onBack }: { onBack: () => void }) {
-  const [tab, setTab] = useState<"overview" | "ai" | "classes">("overview");
+// Teacher-appropriate settings — account, AI co-pilot prefs, own display, logout.
+function TeacherSettings({ account, onAccountUpdate, onLogout }: { account: Account | null; onAccountUpdate: (p: Partial<Account>) => void; onLogout: () => void }) {
+  const { s, update } = useA11y();
+  const { lang, setLang } = useLang();
+  const [name, setName] = useState(account?.name || "");
+  const [school, setSchool] = useState(account?.school || "");
+  const Toggle = ({ on, onToggle }: { on: boolean; onToggle: () => void }) => (
+    <button onClick={onToggle} className="w-12 h-6 rounded-full relative cursor-pointer flex-shrink-0 transition-colors" style={{ backgroundColor: on ? P : "#D1D5DB" }}>
+      <div className="w-5 h-5 bg-white rounded-full absolute top-0.5 transition-all shadow-sm" style={{ left: on ? 24 : 2 }} />
+    </button>
+  );
+  const langToCode = (l: Lang) => (l === "en" ? "GB" : l === "ceb" ? "CEB" : l === "hil" ? "HIL" : "PH");
+  const STRATEGIES = [
+    { id: "read-listen", label: "Read & Listen" },
+    { id: "worked-example", label: "Worked Example" },
+    { id: "guiding-questions", label: "Guiding Questions" },
+    { id: "quest", label: "Quest Mode" },
+    { id: "eli5", label: "Super Simple" },
+  ];
+  const display: { key: keyof A11ySettings; label: string; desc: string }[] = [
+    { key: "dyslexiaFont", label: "Dyslexia-Friendly Font", desc: "Lexend font + spacing" },
+    { key: "largeText", label: "Malaking Teksto", desc: "Palakihin ang lahat ng text" },
+    { key: "calmMode", label: "Calm Mode", desc: "Walang animation, mas malambot na kulay" },
+    { key: "readAloud", label: "Read Aloud", desc: "Basahin nang malakas ang teksto" },
+  ];
+  const card = "bg-white border border-border rounded-2xl p-4";
+  const lbl = "text-[10px] font-black uppercase tracking-widest text-muted-foreground";
+  const inp = "w-full rounded-xl px-4 py-2.5 text-sm font-semibold outline-none";
+  return (
+    <div className="px-4 pt-4 space-y-5 pb-8">
+      <div><p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1">Account at Co-pilot</p><h1 className="font-display font-black text-2xl">Settings</h1></div>
+
+      <div className={cx(card, "space-y-3")}>
+        <p className={lbl}>ACCOUNT</p>
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0" style={{ backgroundColor: SURF }}>{account?.avatar || "🍎"}</div>
+          <div className="min-w-0"><p className="font-display font-black text-sm truncate">{name || "Guro"}</p><p className="text-[11px] text-muted-foreground font-bold truncate">Guro · @{account?.username}</p></div>
+        </div>
+        <div><label className={cx(lbl, "block mb-1.5")}>PANGALAN / NAME</label><input value={name} onChange={e => setName(e.target.value)} onBlur={() => onAccountUpdate({ name: name.trim() || account?.name })} className={inp} style={{ backgroundColor: "#F0F5FB" }} /></div>
+        <div><label className={cx(lbl, "block mb-1.5")}>PAARALAN / SCHOOL</label><input value={school} onChange={e => setSchool(e.target.value)} onBlur={() => onAccountUpdate({ school: school.trim() })} placeholder="Hal. Rizal NHS" className={inp} style={{ backgroundColor: "#F0F5FB" }} /></div>
+      </div>
+
+      <div className={cx(card, "space-y-4")}>
+        <p className={lbl}>AI CO-PILOT</p>
+        <div>
+          <label className={cx(lbl, "block mb-2")}>WIKA NG NILALAMAN / CONTENT LANGUAGE</label>
+          <div className="grid grid-cols-2 gap-2">
+            {LANG_META.map(l => (
+              <button key={l.code} onClick={() => { setLang(l.code); onAccountUpdate({ lang: langToCode(l.code) }); }}
+                className="py-2 px-3 rounded-xl border-2 text-xs font-bold cursor-pointer flex items-center gap-1.5"
+                style={{ borderColor: lang === l.code ? P : "rgba(24,95,165,0.15)", backgroundColor: lang === l.code ? SURF : "#fff", color: lang === l.code ? P : "#6B7280" }}>
+                <span>{l.flag}</span>{l.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div>
+          <label className={cx(lbl, "block mb-2")}>DEFAULT NA ISTRATEHIYA / STRATEGY</label>
+          <div className="grid grid-cols-2 gap-2">
+            {STRATEGIES.map(st => (
+              <button key={st.id} onClick={() => onAccountUpdate({ strategy: st.id })}
+                className="py-2 px-3 rounded-xl border-2 text-[11px] font-bold cursor-pointer text-left"
+                style={{ borderColor: account?.strategy === st.id ? P : "rgba(24,95,165,0.15)", backgroundColor: account?.strategy === st.id ? SURF : "#fff", color: account?.strategy === st.id ? P : "#6B7280" }}>
+                {st.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="flex-1"><p className="font-bold text-sm">Review bago i-publish</p><p className="text-[11px] text-muted-foreground font-medium leading-snug">Suriin ang AI content bago makita ng mag-aaral.</p></div>
+          <Toggle on={!!account?.reviewBeforePublish} onToggle={() => onAccountUpdate({ reviewBeforePublish: !account?.reviewBeforePublish })} />
+        </div>
+      </div>
+
+      <div>
+        <p className={cx(lbl, "mb-3")}>DISPLAY & READING</p>
+        <div className="bg-white border border-border rounded-2xl overflow-hidden">
+          {display.map((d, i) => (
+            <div key={d.key} className={cx("flex items-center gap-3 p-4", i < display.length - 1 && "border-b border-border")}>
+              <div className="flex-1 min-w-0"><p className="font-bold text-sm">{d.label}</p><p className="text-[11px] text-muted-foreground font-medium leading-snug">{d.desc}</p></div>
+              <Toggle on={!!s[d.key]} onToggle={() => update({ [d.key]: !s[d.key] } as Partial<A11ySettings>)} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className={card}>
+        <p className={cx(lbl, "mb-1")}>ABOUT</p>
+        <p className="text-xs text-muted-foreground font-medium">GETS Teacher Co-pilot · Aligned to DepEd MATATAG · Offline-ready · v0.0.1</p>
+      </div>
+
+      <button onClick={onLogout} className="w-full py-3.5 rounded-2xl border-2 font-display font-black text-sm cursor-pointer hover:opacity-90 transition-opacity"
+        style={{ borderColor: "#A32D2D", backgroundColor: "#FFF1F2", color: "#A32D2D" }}>Lumabas sa Account</button>
+    </div>
+  );
+}
+
+function TeacherApp({ onBack, name, account, onAccountUpdate }: { onBack: () => void; name: string; account: Account | null; onAccountUpdate: (p: Partial<Account>) => void }) {
+  const [tab, setTab] = useState<"overview" | "ai" | "classes" | "settings">("overview");
   const [activeClass, setActiveClass] = useState<string | null>(null);
   const [chatLog, setChatLog] = useState<{ from: "teacher" | "ai"; text: string }[]>([
-    { from: "ai", text: "Hi, Mrs. Corazon! I'm your GETS AI Co-pilot. I can help you draft lesson plans, quizzes, worksheets, and SPED adaptations in seconds. What do you need today?" },
+    { from: "ai", text: `Hi, ${name}! I'm your GETS AI Co-pilot. I can help you draft lesson plans, quizzes, worksheets, and SPED adaptations in seconds. What do you need today?` },
   ]);
   const [chatInput, setChatInput] = useState("");
   const [aiTyping, setAiTyping] = useState(false);
@@ -1982,7 +2081,7 @@ function TeacherApp({ onBack }: { onBack: () => void }) {
     setAiTyping(true);
     let reply: string;
     try {
-      reply = await generate(text, { lang, system: "You are the GETS teacher co-pilot. Help draft MATATAG-aligned lesson plans, quizzes, worksheets, and SPED adaptations. The teacher reviews and approves everything.", fallback: cannedReply(text) });
+      reply = await generate(text, { lang, strategy: account?.strategy as any, system: "You are the GETS teacher co-pilot. Help draft MATATAG-aligned lesson plans, quizzes, worksheets, and SPED adaptations. The teacher reviews and approves everything.", fallback: cannedReply(text) });
     } catch {
       reply = cannedReply(text);
     }
@@ -2023,7 +2122,7 @@ function TeacherApp({ onBack }: { onBack: () => void }) {
             </div>
           </div>
           {!activeClass && (
-            <p className="text-xs text-muted-foreground font-medium ml-11">Mrs. Corazon Dela Cruz · Rizal NHS</p>
+            <p className="text-xs text-muted-foreground font-medium ml-11">{name} · Rizal NHS</p>
           )}
         </div>
       </div>
@@ -2034,11 +2133,12 @@ function TeacherApp({ onBack }: { onBack: () => void }) {
           <div className="max-w-sm mx-auto flex">
             {([
               { id: "overview", label: "Overview" },
-              { id: "ai", label: "AI Co-pilot" },
-              { id: "classes", label: "My Classes" },
+              { id: "ai", label: "Co-pilot" },
+              { id: "classes", label: "Classes" },
+              { id: "settings", label: "Settings" },
             ] as const).map(t => (
               <button key={t.id} onClick={() => setTab(t.id)}
-                className="flex-1 py-3 text-xs font-black cursor-pointer transition-all relative"
+                className="flex-1 py-3 text-[11px] font-black cursor-pointer transition-all relative"
                 style={{ color: tab === t.id ? P : "#6B7280" }}>
                 {t.label}
                 {tab === t.id && <div className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full" style={{ backgroundColor: P }} />}
@@ -2114,6 +2214,9 @@ function TeacherApp({ onBack }: { onBack: () => void }) {
           )}
 
           {/* ── OVERVIEW TAB ── */}
+          {!activeClass && tab === "settings" && (
+            <div className="-mx-4 -my-1"><TeacherSettings account={account} onAccountUpdate={onAccountUpdate} onLogout={onBack} /></div>
+          )}
           {!activeClass && tab === "overview" && (
             <div className="space-y-4">
               {/* Hero summary */}
@@ -2331,14 +2434,117 @@ function TeacherApp({ onBack }: { onBack: () => void }) {
 }
 
 // ─── Root ─────────────────────────────────────────────────────────────────────
+// Where to send a logged-in account.
+function routeForRole(a: Account): Screen {
+  if (a.role === "student") return a.onboarded ? "studentApp" : "onboarding_language";
+  return a.role === "parent" ? "parentApp" : "teacherApp";
+}
+
+// ─── Auth (local-first login / sign-up for all roles) ───────────────────────────
+function AuthScreen({ onAuthed }: { onAuthed: (a: Account) => void }) {
+  const [mode, setMode] = useState<"login" | "signup">(listAccounts().length > 0 ? "login" : "signup");
+  const [role, setRole] = useState<Role>("student");
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [avatar, setAvatar] = useState("");
+  const [error, setError] = useState("");
+  const roles: { id: Role; label: string; emoji: string }[] = [
+    { id: "student", label: "Mag-aaral", emoji: "🎓" },
+    { id: "parent", label: "Magulang", emoji: "👪" },
+    { id: "teacher", label: "Guro", emoji: "🍎" },
+  ];
+  const inputCls = "w-full rounded-xl px-4 py-3 text-sm font-semibold outline-none placeholder:text-muted-foreground";
+  const inputStyle = { backgroundColor: "#F0F5FB" } as React.CSSProperties;
+  const submit = () => {
+    setError("");
+    const res = mode === "signup"
+      ? signUp({ username, password, role, name, avatar })
+      : logIn(username, password);
+    if (!res.ok) { setError(res.error || "Something went wrong."); return; }
+    onAuthed(res.account!);
+  };
+  return (
+    <div className="min-h-screen bg-background flex flex-col max-w-sm mx-auto w-full px-5 py-8">
+      <div className="flex flex-col items-center text-center mb-5">
+        <img src={getsLogo} alt="GETS" className="w-20 h-20 object-contain mb-1" />
+        <h1 className="font-display font-black text-2xl leading-tight">{mode === "signup" ? "Gumawa ng Account" : "Maligayang Pagbabalik"}</h1>
+        <p className="text-sm text-muted-foreground font-medium">{mode === "signup" ? "Create your GETS account — saved on this device." : "Log in to continue learning."}</p>
+      </div>
+      <div className="bg-white border border-border rounded-2xl p-5 space-y-4">
+        {mode === "signup" && (
+          <div>
+            <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground block mb-2">SINO KA? / I AM A…</label>
+            <div className="grid grid-cols-3 gap-2">
+              {roles.map(r => (
+                <button key={r.id} onClick={() => setRole(r.id)} className="py-2.5 rounded-xl border-2 text-xs font-bold flex flex-col items-center gap-1 cursor-pointer transition-all"
+                  style={{ borderColor: role === r.id ? P : "rgba(24,95,165,0.15)", backgroundColor: role === r.id ? SURF : "#fff", color: role === r.id ? P : "#6B7280" }}>
+                  <span className="text-lg leading-none">{r.emoji}</span>{r.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+        {mode === "signup" && (
+          <div>
+            <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground block mb-2">PANGALAN / DISPLAY NAME</label>
+            <input value={name} onChange={e => setName(e.target.value)} placeholder="Hal. Jasmin" className={inputCls} style={inputStyle} />
+          </div>
+        )}
+        <div>
+          <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground block mb-2">USERNAME</label>
+          <input value={username} onChange={e => setUsername(e.target.value)} autoCapitalize="none" autoCorrect="off" placeholder="username" className={inputCls} style={inputStyle} />
+        </div>
+        <div>
+          <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground block mb-2">PASSWORD</label>
+          <input type="password" value={password} onChange={e => setPassword(e.target.value)} onKeyDown={e => { if (e.key === "Enter") submit(); }} placeholder="••••" className={inputCls} style={inputStyle} />
+        </div>
+        {mode === "signup" && (
+          <div>
+            <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground block mb-2">PUMILI NG AVATAR</label>
+            <div className="grid grid-cols-4 gap-2">
+              {AVATARS.map(av => (
+                <button key={av} onClick={() => setAvatar(av)} className="aspect-square rounded-xl border-2 text-2xl flex items-center justify-center cursor-pointer"
+                  style={{ borderColor: avatar === av ? P : "rgba(24,95,165,0.15)", backgroundColor: avatar === av ? SURF : "#F0F5FB" }}>{av}</button>
+              ))}
+            </div>
+          </div>
+        )}
+        {error && <p className="text-xs font-bold text-center" style={{ color: "#DC2626" }}>{error}</p>}
+        <button onClick={submit} className="w-full text-white font-display font-black text-sm py-3.5 rounded-2xl cursor-pointer hover:opacity-95 transition-opacity" style={{ backgroundColor: P }}>
+          {mode === "signup" ? "Mag-Sign Up" : "Mag-Log In"}
+        </button>
+      </div>
+      <button onClick={() => { setMode(mode === "signup" ? "login" : "signup"); setError(""); }} className="mt-4 text-center text-xs font-bold cursor-pointer hover:underline" style={{ color: P }}>
+        {mode === "signup" ? "May account na? Mag-log in" : "Walang account? Gumawa ng bago"}
+      </button>
+      <p className="mt-auto pt-6 text-center text-[10px] text-muted-foreground font-medium">🔒 Naka-save lamang ang account sa device na ito.</p>
+    </div>
+  );
+}
+
 export default function App() {
-  const [screen, setScreen] = useState<Screen>("splash");
-  const [selectedLang, setSelectedLang] = useState("PH");
+  const session0 = getSession();
+  const [user, setUser] = useState<Account | null>(session0);
+  const [screen, setScreen] = useState<Screen>(session0 ? routeForRole(session0) : "splash");
+  const [selectedLang, setSelectedLang] = useState(session0?.lang || "PH");
   const [learningStyle, setLearningStyle] = useState<LearningStyle>("Reading");
-  const [learner, setLearner] = useState<LearnerProfile>({ name: "", avatar: "🙂", language: "PH", learningStyle: "Reading", mood: null });
+  const [learner, setLearner] = useState<LearnerProfile>(
+    session0
+      ? { name: session0.name, avatar: session0.avatar, language: session0.lang || "PH", learningStyle: "Reading", mood: null }
+      : { name: "", avatar: "🙂", language: "PH", learningStyle: "Reading", mood: null }
+  );
   const [a11y, setA11y] = useState<A11ySettings>(A11Y_DEFAULTS);
   const updateA11y = (p: Partial<A11ySettings>) => setA11y(prev => ({ ...prev, ...p }));
-  const [lang, setLang] = useState<Lang>("tl");
+  const [lang, setLang] = useState<Lang>(session0?.lang ? codeToLang(session0.lang) : "tl");
+  const onAuthed = (a: Account) => {
+    setUser(a);
+    setSelectedLang(a.lang || "PH");
+    setLearner({ name: a.name, avatar: a.avatar, language: a.lang || "PH", learningStyle: "Reading", mood: null });
+    setLang(codeToLang(a.lang || "PH"));
+    setScreen(routeForRole(a));
+  };
+  const logout = () => { logOut(); setUser(null); setScreen("auth"); };
   // Malaking Teksto: scale the root font-size so rem-based text grows app-wide
   useEffect(() => {
     document.documentElement.style.fontSize = a11y.largeText ? "118.75%" : "";
@@ -2357,16 +2563,17 @@ export default function App() {
         className={cx("min-h-screen bg-background font-sans", a11y.calmMode && "a11y-calm", a11y.dyslexiaFont && "a11y-dyslexic", a11y.zenMode && "a11y-zen")}
         style={{ fontFamily: a11y.dyslexiaFont ? '"Lexend", "Nunito", system-ui, sans-serif' : undefined }}
       >
-      {screen === "splash" && <SplashScreen onNext={() => setScreen("roleSelect")} />}
+      {screen === "splash" && <SplashScreen onNext={() => setScreen("auth")} />}
+      {screen === "auth" && <AuthScreen onAuthed={onAuthed} />}
       {screen === "roleSelect" && <RoleSelectScreen onSelect={r => { if (r === "student") setScreen("onboarding_language"); else if (r === "parent") setScreen("parentApp"); else setScreen("teacherApp"); }} />}
-      {screen === "onboarding_language" && <LanguagePickScreen onNext={code => { setSelectedLang(code); setLang(codeToLang(code)); setScreen("onboarding_assessment"); }} onBack={() => setScreen("roleSelect")} />}
+      {screen === "onboarding_language" && <LanguagePickScreen onNext={code => { setSelectedLang(code); setLang(codeToLang(code)); setScreen("onboarding_assessment"); }} onBack={() => setScreen("auth")} />}
       {screen === "onboarding_assessment" && <AssessmentScreen onDone={style => { setLearningStyle(style); setScreen("onboarding_style_result"); }} onBack={() => setScreen("onboarding_language")} />}
-      {screen === "onboarding_style_result" && <StyleResultScreen style={learningStyle} onStyleChange={setLearningStyle} onNext={() => setScreen("onboarding_profile")} onBack={() => setScreen("onboarding_assessment")} />}
+      {screen === "onboarding_style_result" && <StyleResultScreen style={learningStyle} onStyleChange={setLearningStyle} onNext={() => setScreen("mood_check")} onBack={() => setScreen("onboarding_assessment")} />}
       {screen === "onboarding_profile" && <ProfileCreateScreen onDone={(name, avatar) => { setLearner({ name, avatar, language: selectedLang, learningStyle, mood: null }); setScreen("mood_check"); }} onBack={() => setScreen("onboarding_style_result")} />}
-      {screen === "mood_check" && <MoodCheckScreen learner={learner} onDone={mood => { setLearner(prev => ({ ...prev, mood })); setScreen("studentApp"); }} onSkip={() => setScreen("studentApp")} />}
-      {screen === "studentApp" && <StudentApp learner={learner} onBack={() => setScreen("roleSelect")} />}
-      {screen === "parentApp" && <ParentApp onBack={() => setScreen("roleSelect")} />}
-      {screen === "teacherApp" && <TeacherApp onBack={() => setScreen("roleSelect")} />}
+      {screen === "mood_check" && <MoodCheckScreen learner={learner} onDone={mood => { setLearner(prev => ({ ...prev, mood })); if (user) updateAccount(user.id, { onboarded: true, lang: selectedLang }); setScreen("studentApp"); }} onSkip={() => { if (user) updateAccount(user.id, { onboarded: true, lang: selectedLang }); setScreen("studentApp"); }} />}
+      {screen === "studentApp" && <StudentApp learner={learner} onBack={logout} />}
+      {screen === "parentApp" && <ParentApp onBack={logout} />}
+      {screen === "teacherApp" && <TeacherApp onBack={logout} name={user?.name || "Guro"} account={user} onAccountUpdate={patch => { if (user) { updateAccount(user.id, patch); setUser({ ...user, ...patch }); } }} />}
       </div>
     </A11yContext.Provider>
     </LangContext.Provider>
