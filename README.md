@@ -331,15 +331,23 @@ stack-a-ton/
 
 ## Screenshots
 
-> `[FILL IN — add real screens here once the build produces them.]`
+> Captured from the live MVP at **[gets-app.vercel.app](https://gets-app.vercel.app)** (mobile-web, student flow).
 
-| **Home / Welcome** | **Multi-format Lesson** | **Adaptive Practice** |
-| --- | --- | --- |
-| `[screenshot]` | `[screenshot]` | `[screenshot]` |
+| **Welcome** | **Create Account (on-device)** | **Mother-Tongue Picker** |
+| :---: | :---: | :---: |
+| <img src="public/img/screenshots/01-welcome.png" width="240" alt="Welcome / splash screen"/> | <img src="public/img/screenshots/02-signup.png" width="240" alt="On-device account creation"/> | <img src="public/img/screenshots/03-language.png" width="240" alt="Philippine mother-tongue & dialect picker"/> |
 
-| **Rewards** | **Accessibility Settings** | **Parent Dashboard** |
-| --- | --- | --- |
-| `[screenshot]` | `[screenshot]` | `[screenshot]` |
+| **Learning-Style Assessment** | **Mood / SEL Check-In** | **Home Dashboard** |
+| :---: | :---: | :---: |
+| <img src="public/img/screenshots/04-assessment.png" width="240" alt="Learning-style assessment"/> | <img src="public/img/screenshots/05-mood-check.png" width="240" alt="Mood check-in"/> | <img src="public/img/screenshots/06-home.png" width="240" alt="Student home dashboard"/> |
+
+| **Multi-Format Lessons** | **Gamified Practice** | **Rewards & Streaks** |
+| :---: | :---: | :---: |
+| <img src="public/img/screenshots/07-lessons.png" width="240" alt="MATATAG Grade 7 lessons across subjects"/> | <img src="public/img/screenshots/08-games.png" width="240" alt="Filipino learning games"/> | <img src="public/img/screenshots/09-rewards.png" width="240" alt="Points, badges, and weekly streaks"/> |
+
+| **Accessibility / SPED Settings** | | |
+| :---: | :---: | :---: |
+| <img src="public/img/screenshots/10-accessibility.png" width="240" alt="SPED settings: dyslexia font, TTS, bionic reading, calm mode"/> | | |
 
 ---
 
