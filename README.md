@@ -1,9 +1,6 @@
-<!-- Date: 25 June 2026 -->
+<!-- Date: 26 June 2026 -->
 
 <div align="center">
-
-<!-- TODO: replace with your real logo once you have one -->
-<!-- ![GETS Logo](public/img/logo.png) -->
 
 # GETS
 
@@ -11,7 +8,6 @@
 
 *Every learner gets the support they need.*
 
-<!-- Replace these badges with your ACTUAL stack. Generate more at https://shields.io -->
 ![Status](https://img.shields.io/badge/status-MVP-orange?style=for-the-badge)
 ![Platform](https://img.shields.io/badge/platform-Mobile%20Web-3DDC84?style=for-the-badge)
 ![AI](https://img.shields.io/badge/AI-powered-purple?style=for-the-badge)
