@@ -345,9 +345,9 @@ stack-a-ton/
 | :---: | :---: | :---: |
 | <img src="public/img/screenshots/07-lessons.png" width="240" alt="MATATAG Grade 7 lessons across subjects"/> | <img src="public/img/screenshots/08-games.png" width="240" alt="Filipino learning games"/> | <img src="public/img/screenshots/09-rewards.png" width="240" alt="Points, badges, and weekly streaks"/> |
 
-| **Accessibility / SPED Settings** | | |
+| **Accessibility / SPED Settings** | **AI Tutor (offline)** | **Inside a Lesson (Read · Listen · Watch)** |
 | :---: | :---: | :---: |
-| <img src="public/img/screenshots/10-accessibility.png" width="240" alt="SPED settings: dyslexia font, TTS, bionic reading, calm mode"/> | | |
+| <img src="public/img/screenshots/10-accessibility.png" width="240" alt="SPED settings: dyslexia font, TTS, bionic reading, calm mode"/> | <img src="public/img/screenshots/11-ai-tutor.png" width="240" alt="GETS AI tutor answering a question with the OFFLINE indicator visible"/> | <img src="public/img/screenshots/12-lesson.png" width="240" alt="Open MATATAG lesson with text/listen/visual formats, worked example, and re-teach controls"/> |
 
 ---
 
