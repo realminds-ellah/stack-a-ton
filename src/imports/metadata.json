@@ -1,0 +1,8 @@
+{
+  "name": "Remix: Remix: GETS",
+  "description": "Guided Education for Tailored Success — an offline-capable, bilingual AI learning companion for Grade 7 Filipino students aligned to the MATATAG curriculum.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
