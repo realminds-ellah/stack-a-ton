@@ -123,12 +123,12 @@ The engine, teaching strategies, and adaptation logic are built **once** and wor
 
 GETS is early-stage, and we're honest about that — no signed pilot yet, no validated pricing (those are explicit next-step priorities). But the prototype has been put in front of a **deliberately diverse group of testers** — practising teachers, psychology students, parents, learners, and industry professionals — and the direction held up across all of them:
 
-- **Learners** — in direct testing, students reported **higher engagement and less frustration**; parents noted GETS channels kids' pull toward screens into productive learning rather than passive gaming.
+- **Learners** — the prototype was tested hands-on with **Grade 9 students of Section 9-Kudarat at Fortunato F. Halili National Agricultural School (FFNAS)**, who reported **higher engagement and less frustration**; parents noted GETS channels kids' pull toward screens into productive learning rather than passive gaming.
 - **Educators** — a practising private high-school teacher said she **would use it in her own classroom**, and testers found the **class dashboard** a real cut in administrative load — the strongest signal we can get, since teachers are the gatekeepers to adoption.
 - **Psychology & pedagogy** — psychology students reviewed the inclusive, UDL-based design and confirmed it **lowers the barrier for neurodivergent learners**.
 - **Industry & mentorship** — a professional from Accenture gave **positive feedback on the concept**, and business professionals and parents helped pressure-test the roadmap for scalability and real-world home use.
 
-> *These are early, informal signals — directional encouragement and user feedback, not formal endorsements or partnerships. We name the roles, not the individuals, out of respect for their time and privacy. Our near-term priority is to turn this interest into a **structured pilot with documented outcomes**.*
+> *These are early, informal signals — directional encouragement and user feedback, not formal endorsements or partnerships. In this section we describe the feedback by role rather than attributing specific claims to named people; the testers who consented are thanked by name in the [Acknowledgements](#acknowledgements). Our near-term priority is to turn this interest into a **structured pilot with documented outcomes**.*
 
 ---
 
@@ -637,33 +637,35 @@ If you want to help build the next generation of inclusive, offline-first Filipi
     <td align="center" width="25%">
       <img src="public/img/team/Ellah.jpeg" width="150" alt="Ellah Benerado"/><br/>
       <strong>Ellah Benerado</strong><br/>
-      <sub>Co-Founder · Full-Stack Developer</sub><br/>
+      <sub>Co-Founder · Full-Stack &amp; AI Engineer</sub><br/>
       <br/>
       <a href="https://www.linkedin.com/in/ellahvate"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
     </td>
     <td align="center" width="25%">
       <img src="public/img/team/Eliesha.jpg" width="150" alt="Eliesha Mae Francisco"/><br/>
       <strong>Eliesha Mae Francisco</strong><br/>
-      <sub>Co-Founder · UI Design &amp; Storytelling</sub><br/>
+      <sub>Co-Founder · UI Design &amp; Learning Experience Developer (LXD)</sub><br/>
       <br/>
       <a href="https://www.linkedin.com/in/elifrncsc"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
     </td>
     <td align="center" width="25%">
       <img src="public/img/team/Lance.png" width="150" alt="Lance Evangelista"/><br/>
       <strong>Lance Evangelista</strong><br/>
-      <sub>Co-Founder · Business Strategist</sub><br/>
+      <sub>Co-Founder · Business Strategy &amp; Model Evaluator</sub><br/>
       <br/>
       <a href="https://www.linkedin.com/in/lance-miguel-evangelista-58691a315"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
     </td>
     <td align="center" width="25%">
       <img src="public/img/team/Osyris.jpg" width="150" alt="Osyris Fajardo"/><br/>
       <strong>Osyris Fajardo</strong><br/>
-      <sub>Co-Founder · Front-End &amp; Storytelling</sub><br/>
+      <sub>Co-Founder · Front-End &amp; Learning Experience Developer (LXD)</sub><br/>
       <br/>
       <a href="https://www.linkedin.com/in/osyris-benedict-fajardo-237b1738b"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
     </td>
   </tr>
 </table>
+
+*Built by undergraduate students from **Bulacan State University**, Philippines — Ellah Benerado, Osyris Fajardo, and Eliesha Mae Francisco are taking **BS Mathematics Major in Computer Science**; Lance Evangelista is taking **BS Data Science**.*
 
 **Our edge:** deep technical skill in **data science and software engineering**, paired with a genuine grounding in **pedagogical research** — so GETS is both technically robust and true to real Philippine classroom conditions.
 
@@ -687,6 +689,17 @@ If you want to help build the next generation of inclusive, offline-first Filipi
 **Planned (acknowledged when the feature ships):**
 
 - **OpenDyslexic** typeface by Abbie Gonzalez ([opendyslexic.org](https://opendyslexic.org)), under the **SIL Open Font License 1.1**, for the dyslexia accessibility mode on the roadmap. *(Attribution will be required once bundled.)*
+
+### People who shaped GETS
+
+Our heartfelt thanks to the testers and reviewers who gave their time to try the prototype and pressure-test the idea. Their feedback is the basis of the [Early Validation](#early-validation) above, and each brought a different lens:
+
+- **Monica Moreno** — *private teacher* — tested the prototype with real learners and gave the classroom-practitioner perspective on whether GETS earns a place in day-to-day teaching.
+- **Franceska Petallana** — *BS Psychology, Our Lady of Fatima University (OLFU)* — reviewed the inclusive, UDL-based design and its fit for neurodivergent learners.
+- **Stephanie Prado** — *BS Psychology, Far Eastern University (FEU)* — reviewed the learning experience and accessibility through a developmental-psychology lens.
+- **Irra Negros** — *BS Entrepreneurship, Polytechnic University of the Philippines (PUP) Sta. Maria* — pressure-tested the business model and roadmap for real-world scalability.
+- **Analyn Rirao Panlaqui** — *parent of a high-school and a grade-school student* — gave the home-use and parent perspective on engagement and screen time.
+- **The Grade 9 learners of Section 9-Kudarat** — *Fortunato F. Halili National Agricultural School (FFNAS)* — tested the app hands-on as students, giving the most important signal of all: whether GETS actually helps learners.
 
 ---
 
