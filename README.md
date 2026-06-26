@@ -43,8 +43,9 @@
 16. [Pilot Study Design](#pilot-study-design)
 17. [MVP Scope & Roadmap](#mvp-scope--roadmap)
 18. [Business Model & Adoption](#business-model--adoption)
-19. [Team](#team)
-20. [Acknowledgements](#acknowledgements)
+19. [The Opportunity](#the-opportunity)
+20. [Team](#team)
+21. [Acknowledgements](#acknowledgements)
 
 ---
 
@@ -72,6 +73,7 @@ Many Grade 7 students enter junior high school with uneven foundations in readin
 - Some are too shy to ask questions.
 - Some need the lesson explained in Tagalog or Taglish.
 - Some lose access when the internet is slow or unavailable.
+- Overcrowded classrooms and high teacher-to-student ratios leave little room for one-on-one attention.
 - Parents often don't know exactly which topic their child is struggling with.
 
 The context is urgent and specific:
@@ -81,7 +83,7 @@ The context is urgent and specific:
 - The **MATATAG curriculum** for Grade 7 went live in **SY 2024–2025** — it is the curriculum these students are on *right now*.
 - Connectivity across much of the Philippines is patchy, so an online-only tool doesn't reach the learners who need it most.
 
-The deeper problem is not only access to lessons. It is that **many students stop trying when they feel left behind.** GETS is designed to intervene at exactly that moment.
+The mismatch is structural, not personal — it isn't the student who is failing, but a rigid "one-size-fits-all" system that can't see each learner individually. And the deeper problem is not only access to lessons: it is that **many students stop trying when they feel left behind.** GETS is designed to intervene at exactly that moment.
 
 ---
 
@@ -105,16 +107,27 @@ The Philippines has over 120 distinct languages — not dialects — and "Tagalo
 
 The engine, teaching strategies, and adaptation logic are built **once** and work at any level — preschool to college. Only the curriculum content changes per stage. Grade 7 is where we prove it; the same architecture extends across the whole education journey without re-engineering.
 
+### At a glance — vs. traditional ed-tech
+
+| | Traditional ed-tech | **GETS** |
+| --- | --- | --- |
+| **Approach** | One-size-fits-all | **Adaptive** — re-teaches a different way when a lesson doesn't land |
+| **Connectivity** | Assumes the internet | **Offline-first** — cached lessons work with no signal |
+| **Inclusivity** | SPED treated as a separate track | **Inclusive by default** — dyslexia/ADHD/autism supports for everyone |
+| **Language** | Tagalog + English | **Mother-tongue-first** — the language the learner thinks in |
+
 ---
 
 ## Early Validation
 
-GETS is early-stage, and we're honest about that — no signed pilot yet, no validated pricing (those are explicit next-step priorities). But the direction has been checked with the two audiences that matter most:
+GETS is early-stage, and we're honest about that — no signed pilot yet, no validated pricing (those are explicit next-step priorities). But the prototype has been put in front of a **deliberately diverse group of testers** — practising teachers, psychology students, parents, learners, and industry professionals — and the direction held up across all of them:
 
-- **A practising private high-school teacher** reviewed the concept and said she **would use it in her own classroom** — the strongest signal we could ask for at this stage, because the teacher is the gatekeeper to real adoption.
-- **A professional from Accenture** gave **positive feedback on the concept** in conversation.
+- **Learners** — in direct testing, students reported **higher engagement and less frustration**; parents noted GETS channels kids' pull toward screens into productive learning rather than passive gaming.
+- **Educators** — a practising private high-school teacher said she **would use it in her own classroom**, and testers found the **class dashboard** a real cut in administrative load — the strongest signal we can get, since teachers are the gatekeepers to adoption.
+- **Psychology & pedagogy** — psychology students reviewed the inclusive, UDL-based design and confirmed it **lowers the barrier for neurodivergent learners**.
+- **Industry & mentorship** — a professional from Accenture gave **positive feedback on the concept**, and business professionals and parents helped pressure-test the roadmap for scalability and real-world home use.
 
-> *These are early, informal signals — directional encouragement, not formal endorsements or partnerships. We're naming the roles, not the individuals, out of respect for their time and privacy. Our near-term priority is to turn this interest into a structured pilot with documented outcomes.*
+> *These are early, informal signals — directional encouragement and user feedback, not formal endorsements or partnerships. We name the roles, not the individuals, out of respect for their time and privacy. Our near-term priority is to turn this interest into a **structured pilot with documented outcomes**.*
 
 ---
 
@@ -185,8 +198,9 @@ An AI tutor that confidently teaches something wrong is worse than no tutor. GET
 - **Teacher-reviewed.** The teacher reviews and approves AI-generated lessons, quizzes, and summaries before they reach students. The AI assists; the teacher remains the authority.
 - **Source-tagged.** Lessons show they're drawn from the student's real Grade 7 MATATAG syllabus, so learners and parents can see it's their actual curriculum.
 - **Designed to defer.** When the AI is unsure, it points the student back to their teacher or textbook rather than inventing an answer.
+- **Privacy-first.** Student data is minimised and anonymised, and handled in line with the **Data Privacy Act of 2012 (RA 10173)** — accounts are local-first by default, so a learner can use GETS without their data leaving the device.
 
-GETS is a **companion, not a replacement** for the teacher.
+GETS is a **companion, not a replacement** for the teacher — the principle throughout is simple: **the AI suggests, the teacher decides.**
 
 ---
 
@@ -223,6 +237,16 @@ The deeper problem isn't access to lessons — it's that students stop trying wh
 ---
 
 ## Core Features
+
+GETS rests on **five pillars**:
+
+| Pillar | What it delivers |
+| --- | --- |
+| **Adaptive learning** | Non-linear teaching — one concept through multiple formats, re-taught a different way when it doesn't land |
+| **Inclusivity** | First-class support for neurodivergent learners (ADHD, dyslexia, autism) and instruction in the learner's mother tongue |
+| **Teacher empowerment** | AI-drafted lesson plans and quizzes plus real-time class dashboards that cut administrative load |
+| **Parental engagement** | Transparent progress tracking, AI-curated home study tips, and a direct line to the teacher |
+| **Accessibility** | Offline-first architecture so learners in remote, low-connectivity areas aren't left out |
 
 ### Adaptive multi-format lessons (AI-generated)
 
@@ -455,7 +479,7 @@ GETS will **never charge the struggling students who are its reason for existing
 
 We serve all Filipino learners — but we win one beachhead first, prove outcomes, then expand. Going after every payer at once is how young ed-tech ventures stall.
 
-- **Phase 1 — beachhead: CSR/grant-funded pilots + private schools & NGO learning centres.** These move fast, have technology budgets or grant backing, and feel the personalised-and-SPED-support gap most acutely. Crucially, a **CSR- or grant-funded pilot lets us serve public-school learners — our actual mission — while a foundation or corporate partner pays**, resolving the who-pays tension directly. *(Programmes like this one are a natural on-ramp.)*
+- **Phase 1 — beachhead: CSR/grant-funded pilots + private schools & NGO learning centres.** These move fast, have technology budgets or grant backing, and feel the personalised-and-SPED-support gap most acutely. Crucially, a **CSR- or grant-funded pilot lets us serve public-school learners — our actual mission — while a foundation or corporate partner pays**, resolving the who-pays tension directly. Government innovation and digital-development programmes (e.g. **DOST**, **DTI**) are a natural grant source here, alongside corporate CSR. *(Programmes like this one are a natural on-ramp.)*
 - **Phase 2 — scale: DepEd / LGU.** The biggest impact and the truest mission fit, but multi-year procurement and unfunded at student scale. This is the **long game we earn with Phase 1 pilot evidence** — not a Year 1 revenue line.
 - **Cross-subsidy throughout:** paying private schools and partners underwrite free public-school access. The people who can pay fund the people who can't.
 
@@ -503,6 +527,17 @@ GETS is **MATATAG-native** (the precondition for any DepEd alignment) and **offl
 
 ---
 
+## The Opportunity
+
+We're looking for partners to take GETS from prototype to proof:
+
+- **Pilot partners** — public schools, NGOs, and CSR/grant sponsors to run a structured Grade 7 pilot with documented learning outcomes.
+- **Mentorship** — guidance on scaling strategy, ed-tech go-to-market, and DepEd/LGU pathways.
+
+If you want to help build the next generation of inclusive, offline-first Filipino education, **[let's talk](https://www.linkedin.com/in/ellahvate)**.
+
+---
+
 ## Team
 
 <div align="center">
@@ -541,6 +576,8 @@ GETS is **MATATAG-native** (the precondition for any DepEd alignment) and **offl
     </td>
   </tr>
 </table>
+
+**Our edge:** deep technical skill in **data science and software engineering**, paired with a genuine grounding in **pedagogical research** — so GETS is both technically robust and true to real Philippine classroom conditions.
 
 </div>
 
