@@ -3,6 +3,7 @@ import path from 'path'
 import { pathToFileURL } from 'url'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
+import { VitePWA } from 'vite-plugin-pwa'
 
 
 function figmaAssetResolver() {
@@ -81,6 +82,38 @@ export default defineConfig(({ mode }) => {
       // Tailwind is not being actively used – do not remove them
       react(),
       tailwindcss(),
+      // PWA: precache the app shell + assets so GETS loads and runs with no
+      // network (installable, airplane-mode demo). The AI endpoints are left
+      // network-only so they fail fast offline and the in-app fallbacks
+      // (offline answer bank + Web Speech TTS) take over.
+      VitePWA({
+        registerType: 'autoUpdate',
+        includeAssets: ['favicon.png', 'apple-touch-icon.png', 'og.jpg'],
+        manifest: {
+          name: 'GETS — Guided Education for Tailored Success',
+          short_name: 'GETS',
+          description: 'AI-powered, multilingual, offline-capable Grade 7 learning companion.',
+          theme_color: '#185FA5',
+          background_color: '#FFFFFF',
+          display: 'standalone',
+          orientation: 'portrait',
+          start_url: '/',
+          icons: [
+            { src: 'pwa-192x192.png', sizes: '192x192', type: 'image/png' },
+            { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png' },
+            { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+          ],
+        },
+        workbox: {
+          globPatterns: ['**/*.{js,css,html,png,jpg,jpeg,svg,ico,woff,woff2}'],
+          navigateFallback: '/index.html',
+          navigateFallbackDenylist: [/^\/api\//],
+          maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
+          runtimeCaching: [
+            { urlPattern: ({ url }: { url: URL }) => url.pathname.startsWith('/api/'), handler: 'NetworkOnly' },
+          ],
+        },
+      }),
     ],
     resolve: {
       alias: {

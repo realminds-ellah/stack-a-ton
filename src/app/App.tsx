@@ -3,7 +3,7 @@ import {
   Home, BookOpen, Gamepad2, Trophy, Settings, ArrowRight, ArrowLeft,
   Heart, Flame, Sparkles, Volume2, ChevronRight,
   Check, Zap, Play, RefreshCw, CheckCircle, Award, X, Send, Mic,
-  GraduationCap, Lock, Eye, MessageCircle, Wifi,
+  GraduationCap, Lock, Eye, MessageCircle, Wifi, WifiOff,
   Triangle, FlaskConical, BookMarked, Languages
 } from "lucide-react";
 import { ImageWithFallback } from "./components/figma/ImageWithFallback";
@@ -24,6 +24,7 @@ import faceShocked from "../imports/gets-face-shocked.png";
 import { useAI, speak, stopSpeaking, useSpeaking } from "../ai";
 import { signUp, logIn, getSession, logOut, updateAccount, listAccounts } from "../auth/store";
 import type { Account } from "../auth/store";
+import { loadProgress, saveProgress } from "./progressStore";
 
 const P = "#185FA5";
 const PD = "#0F4A87";
@@ -938,7 +939,8 @@ function MoodCheckScreen({ learner, onDone, onSkip }: { learner: LearnerProfile;
 // ─── Student App ──────────────────────────────────────────────────────────────
 function StudentApp({ learner, onBack }: { learner: LearnerProfile; onBack: () => void }) {
   const [tab, setTab] = useState<StudentTab>("home");
-  const [points, setPoints] = useState(1980);
+  const [points, setPoints] = useState(() => loadProgress().points);
+  const [streak] = useState(() => loadProgress().streak);
   const [activeLesson, setActiveLesson] = useState<Subject | null>(null);
   const [gameMode, setGameMode] = useState<GameMode>(null);
   const [getsOpen, setGetsOpen] = useState(false);
@@ -946,8 +948,10 @@ function StudentApp({ learner, onBack }: { learner: LearnerProfile; onBack: () =
     { from: "ai", text: `Kumusta, ${learner.name}! Ako si GETS, ang iyong Grade 7 AI Companion. Itanong mo sa akin ang kahit ano tungkol sa ating aralin!` },
   ]);
   const [chatMsg, setChatMsg] = useState("");
-  const { generate } = useAI();
+  const { generate, online } = useAI();
   const { lang } = useLang();
+  // Persist points/streak so progress survives a reload or PWA relaunch (offline demo).
+  useEffect(() => { saveProgress({ ...loadProgress(), points, streak }); }, [points, streak]);
   const { s: a11y } = useA11y();
   const voice = useVoiceInput(lang);
   const send = async (msg: string, opts?: { spoken?: boolean }) => {
@@ -985,9 +989,11 @@ function StudentApp({ learner, onBack }: { learner: LearnerProfile; onBack: () =
         </div>
         <div className="flex items-center gap-2">
           <LangSwitcher />
-          <div className="flex items-center gap-1 text-emerald-600"><Wifi className="w-3 h-3" /><span className="text-[8px] font-bold">ONLINE</span></div>
+          {online
+            ? <div className="flex items-center gap-1 text-emerald-600"><Wifi className="w-3 h-3" /><span className="text-[8px] font-bold">ONLINE</span></div>
+            : <div className="flex items-center gap-1 text-muted-foreground"><WifiOff className="w-3 h-3" /><span className="text-[8px] font-bold">OFFLINE</span></div>}
           <div className="flex items-center gap-1 px-2 py-0.5 rounded-full" style={{ backgroundColor: "#FEF3C7", color: A }}>
-            <Flame className="w-3 h-3" /><span className="text-[9px] font-black">12</span>
+            <Flame className="w-3 h-3" /><span className="text-[9px] font-black">{streak}</span>
           </div>
         </div>
       </div>
